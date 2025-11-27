@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="David Noble – 668 454 671" />
+
+<meta name="date" content="2025-11-26" />
+
+<title>Business Data Analysis Report</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">David Noble Portfolio</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="projects.html">Projects</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Business Data Analysis Report</h1>
+<h3 class="subtitle">CSV Import and Data Cleaning</h3>
+<h4 class="author">David Noble – 668 454 671</h4>
+<h4 class="date">2025-11-26</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#question-1---data-import-and-exploration"
+id="toc-question-1---data-import-and-exploration">Question 1 - Data
+Import and Exploration</a>
+<ul>
+<li><a href="#q1.-a" id="toc-q1.-a">Q1. A</a></li>
+<li><a href="#q1.-b" id="toc-q1.-b">Q1. B</a></li>
+<li><a href="#q1.-c" id="toc-q1.-c">Q1. C</a></li>
+<li><a href="#q1.-d" id="toc-q1.-d">Q1. D</a></li>
+</ul></li>
+<li><a href="#question-2---data-quality-assessment"
+id="toc-question-2---data-quality-assessment">Question 2 - Data Quality
+Assessment</a>
+<ul>
+<li><a href="#q2.-a" id="toc-q2.-a">Q2. A</a></li>
+<li><a href="#q2.-b" id="toc-q2.-b">Q2. B</a></li>
+<li><a href="#q2.-c" id="toc-q2.-c">Q2. C</a></li>
+</ul></li>
+<li><a href="#question-3---business-logic-analysis"
+id="toc-question-3---business-logic-analysis">Question 3 - Business
+Logic Analysis</a>
+<ul>
+<li><a href="#q3.-a" id="toc-q3.-a">Q3. A</a></li>
+<li><a href="#q3.-b" id="toc-q3.-b">Q3. B</a></li>
+<li><a href="#q3.-c" id="toc-q3.-c">Q3. C</a></li>
+<li><a href="#q3.-d" id="toc-q3.-d">Q3. D</a></li>
+</ul></li>
+<li><a href="#question-4---data-aggregation-and-business-insights"
+id="toc-question-4---data-aggregation-and-business-insights">Question 4
+- Data Aggregation and Business Insights</a>
+<ul>
+<li><a href="#q4.-a" id="toc-q4.-a">Q4. A</a></li>
+<li><a href="#q4.-b" id="toc-q4.-b">Q4. B</a></li>
+</ul></li>
+<li><a href="#question-5---executive-summary-creation"
+id="toc-question-5---executive-summary-creation">Question 5 - Executive
+Summary Creation</a>
+<ul>
+<li><a href="#q5.-a" id="toc-q5.-a">Q5. A</a></li>
+<li><a href="#q5.-b" id="toc-q5.-b">Q5. B</a></li>
+</ul></li>
+</ul>
+</div>
+
+<p><br> <br></p>
+<div id="question-1---data-import-and-exploration"
+class="section level2">
+<h2>Question 1 - Data Import and Exploration</h2>
+<p><br></p>
+<pre class="r"><code># Create sample regional sales data
+regional_sales &lt;- data.frame(
+  region = c(&quot;North&quot;, &quot;South&quot;, &quot;East&quot;, &quot;West&quot;, &quot;North&quot;, &quot;South&quot;, &quot;East&quot;, &quot;West&quot;,
+             &quot;North&quot;, &quot;South&quot;, &quot;East&quot;, &quot;West&quot;, &quot;North&quot;, &quot;South&quot;, &quot;East&quot;, 
+             &quot;North&quot;, &quot;South&quot;,&quot;North&quot;),  
+  quarter = c(rep(c(&quot;Q1&quot;, &quot;Q2&quot;, &quot;Q3&quot;, &quot;Q4&quot;), each = 4), &quot;Q4&quot;, &quot;Q4&quot;),
+  revenue = c(125000, 98000, 115000, 102000, 
+              138000, 105000, 128000, 118000,
+              142000, 89000, 135000, 125000,
+              155000, 112000, 148000, 165000, 
+              120000, 91250),
+  customers = c(450, 380, 420, 395, 
+                485, 415, 465, 445,
+                520, 350, 485, 470,
+                575, 425, 545, 590, 435,324))</code></pre>
+<p><br></p>
+<div id="q1.-a" class="section level3">
+<h3>Q1. A</h3>
+<blockquote>
+<p>Our data set contains 18 observations and 4 variables, comprising
+both character and numeric data types.</p>
+</blockquote>
+<pre class="r"><code># examine the structure
+str(regional_sales)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    18 obs. of  4 variables:
+##  $ region   : chr  &quot;North&quot; &quot;South&quot; &quot;East&quot; &quot;West&quot; ...
+##  $ quarter  : chr  &quot;Q1&quot; &quot;Q1&quot; &quot;Q1&quot; &quot;Q1&quot; ...
+##  $ revenue  : num  125000 98000 115000 102000 138000 105000 128000 118000 142000 89000 ...
+##  $ customers: num  450 380 420 395 485 415 465 445 520 350 ...</code></pre>
+<p><br></p>
+</div>
+<div id="q1.-b" class="section level3">
+<h3>Q1. B</h3>
+<blockquote>
+<p>Our data set has revenues ranging between $89,000 and $165,000.
+Customers range from 324 to 590, including those from the “North” and
+“South” regions, as shown in the first few rows of our data set.</p>
+</blockquote>
+<pre class="r"><code># explore the data
+head(regional_sales)</code></pre>
+<pre><code>##   region quarter revenue customers
+## 1  North      Q1  125000       450
+## 2  South      Q1   98000       380
+## 3   East      Q1  115000       420
+## 4   West      Q1  102000       395
+## 5  North      Q2  138000       485
+## 6  South      Q2  105000       415</code></pre>
+<pre class="r"><code>summary(regional_sales)</code></pre>
+<pre><code>##     region            quarter             revenue         customers    
+##  Length:18          Length:18          Min.   : 89000   Min.   :324.0  
+##  Class :character   Class :character   1st Qu.:106750   1st Qu.:416.2  
+##  Mode  :character   Mode  :character   Median :122500   Median :447.5  
+##                                        Mean   :122847   Mean   :454.1  
+##                                        3rd Qu.:137250   3rd Qu.:485.0  
+##                                        Max.   :165000   Max.   :590.0</code></pre>
+<p><br></p>
+</div>
+<div id="q1.-c" class="section level3">
+<h3>Q1. C</h3>
+<blockquote>
+<p>We identified all distinct values for region and quarter variables,
+then embedded a dynamic count using an inline R expression.</p>
+</blockquote>
+<pre class="r"><code># find unique regional data
+region_unique &lt;- data.frame(&quot;Unique Regions&quot; = unique(regional_sales$region), check.names = FALSE)
+
+# count &quot;regions_unique&quot; for inline code reference
+region_count &lt;- nrow(region_unique)
+
+# generate a formatted table
+knitr::kable(region_unique, align = &quot;l&quot;, row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Unique Regions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">North</td>
+</tr>
+<tr class="even">
+<td align="left">South</td>
+</tr>
+<tr class="odd">
+<td align="left">East</td>
+</tr>
+<tr class="even">
+<td align="left">West</td>
+</tr>
+</tbody>
+</table>
+<p>There are 4 unique regions.</p>
+<pre class="r"><code># find unique quarterly data
+quarter_unique &lt;- data.frame(&quot;Unique Quarters&quot; = unique(regional_sales$quarter), check.names = FALSE)
+
+# count &quot;quarter_unique&quot; for inline code reference
+quarter_count &lt;- nrow(quarter_unique)
+
+# generate a formatted table
+knitr::kable(quarter_unique, align = &quot;l&quot;, row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Unique Quarters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Q1</td>
+</tr>
+<tr class="even">
+<td align="left">Q2</td>
+</tr>
+<tr class="odd">
+<td align="left">Q3</td>
+</tr>
+<tr class="even">
+<td align="left">Q4</td>
+</tr>
+</tbody>
+</table>
+<p>There are 4 unique quarters.</p>
+<p><br></p>
+</div>
+<div id="q1.-d" class="section level3">
+<h3>Q1. D</h3>
+<blockquote>
+<p>Knowing our customer base size of 8,174, we can uncover a few
+insights. First, we can benchmark year-to-year traffic and compare it to
+competitors. Next, we could estimate daily traffic to better allocate
+staff, inventory, and budgets. Lastly, we can use this number to more
+effectively manipulate revenue data (e.g., revenue per customer,
+customer turnover/conversion rate).</p>
+</blockquote>
+<pre class="r"><code>#  tally customers
+total_customers &lt;- data.frame(&quot;Total Customers (All Regions &amp; Quarters)&quot; = sum(regional_sales$customers), check.names = FALSE)
+
+# generate customer tally table
+knitr::kable(total_customers, align = &quot;l&quot;, row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Total Customers (All Regions &amp; Quarters)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">8174</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<hr />
+</div>
+</div>
+<div id="question-2---data-quality-assessment" class="section level2">
+<h2>Question 2 - Data Quality Assessment</h2>
+<p><br></p>
+<div id="q2.-a" class="section level3">
+<h3>Q2. A</h3>
+<blockquote>
+<p>We have 0 missing data points. This is great because missing data
+interrupts our ability to do data analysis. We can generalize findings,
+as missing points won’t distort averages, totals, etc. It’s important to
+check for missing data to ensure data accuracy and avoid having to audit
+or debug our data reports too late.</p>
+</blockquote>
+<pre class="r"><code># find &amp; count missing data
+missing_data_count &lt;- data.frame(&quot;Missing Data Points&quot; = sum(is.na(regional_sales)), check.names = FALSE)
+
+# generate missing data table
+knitr::kable(missing_data_count, align = c(&quot;l&quot;), row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Missing Data Points</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+<div id="q2.-b" class="section level3">
+<h3>Q2. B</h3>
+<blockquote>
+<p>We’ve generated a table to summarize the frequency of our data from
+every region and quarter. The data is not evenly distributed, but that
+was expected, as we have multiple new branches in the “North” region and
+lack Q4 data from our recently closed branch in the “West.” In general,
+if we had expected even distribution, it would demonstrate the
+reliability across branches and suggest that our data was incomplete
+and/or repetitive.</p>
+</blockquote>
+<pre class="r"><code># extract frequency data
+region_frequency &lt;- as.data.frame(table(regional_sales$region))
+quarter_frequency &lt;- as.data.frame(table(regional_sales$quarter))
+
+# rename columns for presentation
+names(region_frequency) &lt;- c(&quot;Region&quot;, &quot;Frequency&quot;)
+names(quarter_frequency) &lt;- c(&quot;Quarter&quot;, &quot;Frequency&quot;)
+
+# generate frequency tables
+knitr::kable(region_frequency, align = &quot;l&quot;, row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Region</th>
+<th align="left">Frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">East</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">North</td>
+<td align="left">6</td>
+</tr>
+<tr class="odd">
+<td align="left">South</td>
+<td align="left">5</td>
+</tr>
+<tr class="even">
+<td align="left">West</td>
+<td align="left">3</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>knitr::kable(quarter_frequency, align = &quot;l&quot;, row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Quarter</th>
+<th align="left">Frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Q1</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">Q2</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Q3</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">Q4</td>
+<td align="left">6</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+<div id="q2.-c" class="section level3">
+<h3>Q2. C</h3>
+<blockquote>
+<p>Revenues from our southern branch in Q3 were below $90,000.</p>
+</blockquote>
+<pre class="r"><code># find revenue below $90,000
+low_revenue &lt;- regional_sales[regional_sales$revenue &lt; 90000,]
+
+# format revenue values to currency
+low_revenue$revenue &lt;- dollar(low_revenue$revenue, accuracy = 1)
+
+# rename columns for presentation
+names(low_revenue) &lt;- c(&quot;Region&quot;, &quot;Quarter&quot;, &quot;Revenue&quot;, &quot;Customers&quot;)
+
+# generate &lt; $90,000 table
+knitr::kable(low_revenue, align = rep(&quot;l&quot;, 4), row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Region</th>
+<th align="left">Quarter</th>
+<th align="left">Revenue</th>
+<th align="left">Customers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">South</td>
+<td align="left">Q3</td>
+<td align="left">$89,000</td>
+<td align="left">350</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<hr />
+</div>
+</div>
+<div id="question-3---business-logic-analysis" class="section level2">
+<h2>Question 3 - Business Logic Analysis</h2>
+<p><br></p>
+<div id="q3.-a" class="section level3">
+<h3>Q3. A</h3>
+<blockquote>
+<p>We have four high-revenue branches: three from the North and one from
+the East. They are from the third and fourth quarters.</p>
+</blockquote>
+<pre class="r"><code># find revenue above $140,000
+high_revenue &lt;- regional_sales[regional_sales$revenue &gt; 140000,]
+
+# format revenue values to currency
+high_revenue$revenue &lt;- dollar(high_revenue$revenue, accuracy = 1)
+
+# rename columns for presentation
+names(high_revenue) &lt;- c(&quot;Region&quot;, &quot;Quarter&quot;, &quot;Revenue&quot;, &quot;Customers&quot;)
+
+# create a &quot;high_revenue&quot; count 
+high_revenue_count &lt;- data.frame(&quot;Regions with &gt; $140,000 Revenue&quot; = nrow(high_revenue), check.names = FALSE)
+
+# generate the above $140,000 table
+knitr::kable(high_revenue, align = rep(&quot;l&quot;, 4), row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Region</th>
+<th align="left">Quarter</th>
+<th align="left">Revenue</th>
+<th align="left">Customers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">North</td>
+<td align="left">Q3</td>
+<td align="left">$142,000</td>
+<td align="left">520</td>
+</tr>
+<tr class="even">
+<td align="left">North</td>
+<td align="left">Q4</td>
+<td align="left">$155,000</td>
+<td align="left">575</td>
+</tr>
+<tr class="odd">
+<td align="left">East</td>
+<td align="left">Q4</td>
+<td align="left">$148,000</td>
+<td align="left">545</td>
+</tr>
+<tr class="even">
+<td align="left">North</td>
+<td align="left">Q4</td>
+<td align="left">$165,000</td>
+<td align="left">590</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># generate the above $140,000 frequency table
+knitr::kable(high_revenue_count, align = &quot;l&quot;, row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Regions with &gt; $140,000 Revenue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">4</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+<div id="q3.-b" class="section level3">
+<h3>Q3. B</h3>
+<blockquote>
+<p>We have generated an easy-to-read table of our year-end performance.
+The next step is to confirm whether our “North” and “East” regions are
+our top performers, especially the northern branches in the fourth
+quarter. This may suggest that our product or service is seasonal to
+some degree.</p>
+</blockquote>
+<pre class="r"><code># find Q4 revenue above $130,000 &amp; customers above 500
+year_end_performance &lt;- regional_sales[regional_sales$quarter == &quot;Q4&quot; &amp;
+                                       regional_sales$revenue &gt; 130000 &amp;
+                                       regional_sales$customers &gt; 500,]
+
+# format revenue values to currency
+year_end_performance$revenue &lt;- dollar(year_end_performance$revenue, accuracy = 1)
+
+# rename columns for presentation
+names(year_end_performance) &lt;- c(&quot;Region&quot;, &quot;Quarter&quot;, &quot;Revenue&quot;, &quot;Customers&quot;)
+
+# generate year end performance table
+knitr::kable(year_end_performance, align = rep( &quot;l&quot;, 4), row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Region</th>
+<th align="left">Quarter</th>
+<th align="left">Revenue</th>
+<th align="left">Customers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">North</td>
+<td align="left">Q4</td>
+<td align="left">$155,000</td>
+<td align="left">575</td>
+</tr>
+<tr class="even">
+<td align="left">East</td>
+<td align="left">Q4</td>
+<td align="left">$148,000</td>
+<td align="left">545</td>
+</tr>
+<tr class="odd">
+<td align="left">North</td>
+<td align="left">Q4</td>
+<td align="left">$165,000</td>
+<td align="left">590</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+<div id="q3.-c" class="section level3">
+<h3>Q3. C</h3>
+<blockquote>
+<p>We have created a comparison table showing company-wide average
+revenues of $122,847, compared to $134,225 from the “North-East”
+regions. This confirms our previous suggestion that these regions are
+our top performers.</p>
+</blockquote>
+<pre class="r"><code># find north east regions revenue
+north_east &lt;- regional_sales[regional_sales$region == &quot;East&quot; |
+                             regional_sales$region == &quot;North&quot;,]
+
+# format revenue values to currency
+north_east$revenue &lt;- dollar(north_east$revenue, accuracy = 1)
+
+# rename columns for presentation
+names(north_east) &lt;- c(&quot;Region&quot;, &quot;Quarter&quot;, &quot;Revenue&quot;, &quot;Customers&quot;)
+
+# calculate average north east revenue 
+# used additional functions to fix undetermined bug   
+north_east_mean &lt;- round(mean(as.numeric(gsub(&quot;[^0-9.]&quot;, &quot;&quot;, north_east$Revenue))), 0)
+
+# format revenue values as currency
+north_east_mean_dollar &lt;- dollar(north_east_mean, accuracy = 1)
+
+# extract average revenue of all branches
+total_mean_revenue &lt;- round(mean(regional_sales$revenue), 0)
+
+# format revenues values to currency
+total_mean_dollar &lt;- dollar(total_mean_revenue, accuracy = 1)
+
+# extract north east &amp; all revenue averages 
+north_east_total_compare &lt;- data.frame(
+  &quot;North-East Average Revenue&quot; = north_east_mean_dollar,
+  &quot;All Revenue Average&quot; = total_mean_dollar, check.names = FALSE)
+
+# generate north east table
+knitr::kable(north_east[, c(&quot;Region&quot;, &quot;Quarter&quot;, &quot;Revenue&quot;, &quot;Customers&quot;)], align = rep( &quot;l&quot;, 4), row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Region</th>
+<th align="left">Quarter</th>
+<th align="left">Revenue</th>
+<th align="left">Customers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">North</td>
+<td align="left">Q1</td>
+<td align="left">$125,000</td>
+<td align="left">450</td>
+</tr>
+<tr class="even">
+<td align="left">East</td>
+<td align="left">Q1</td>
+<td align="left">$115,000</td>
+<td align="left">420</td>
+</tr>
+<tr class="odd">
+<td align="left">North</td>
+<td align="left">Q2</td>
+<td align="left">$138,000</td>
+<td align="left">485</td>
+</tr>
+<tr class="even">
+<td align="left">East</td>
+<td align="left">Q2</td>
+<td align="left">$128,000</td>
+<td align="left">465</td>
+</tr>
+<tr class="odd">
+<td align="left">North</td>
+<td align="left">Q3</td>
+<td align="left">$142,000</td>
+<td align="left">520</td>
+</tr>
+<tr class="even">
+<td align="left">East</td>
+<td align="left">Q3</td>
+<td align="left">$135,000</td>
+<td align="left">485</td>
+</tr>
+<tr class="odd">
+<td align="left">North</td>
+<td align="left">Q4</td>
+<td align="left">$155,000</td>
+<td align="left">575</td>
+</tr>
+<tr class="even">
+<td align="left">East</td>
+<td align="left">Q4</td>
+<td align="left">$148,000</td>
+<td align="left">545</td>
+</tr>
+<tr class="odd">
+<td align="left">North</td>
+<td align="left">Q4</td>
+<td align="left">$165,000</td>
+<td align="left">590</td>
+</tr>
+<tr class="even">
+<td align="left">North</td>
+<td align="left">Q4</td>
+<td align="left">$91,250</td>
+<td align="left">324</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># generate a comparison table
+knitr::kable(north_east_total_compare, align = rep(&quot;l&quot;, 2), row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">North-East Average Revenue</th>
+<th align="left">All Revenue Average</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">$134,225</td>
+<td align="left">$122,847</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+<div id="q3.-d" class="section level3">
+<h3>Q3. D</h3>
+<blockquote>
+<p>We have identified a percentage of poor sales relative to our entire
+company sales and observed that two of our southern branches are among
+our worst performers. This contributes to the idea that our product or
+service may be seasonal.</p>
+</blockquote>
+<pre class="r"><code># find below $100,000 revenue or with below 400 customers
+sales_flag &lt;- regional_sales[regional_sales$revenue &lt; 100000 |
+                             regional_sales$customers &lt; 400 ,]
+
+# format revenue values to currency
+sales_flag$revenue &lt;- dollar(sales_flag$revenue, accuracy = 1)
+
+# rename columns for presentation
+names(sales_flag) &lt;- c(&quot;Region&quot;, &quot;Quarter&quot;, &quot;Revenue&quot;, &quot;Customers&quot;)
+
+# calculate &quot;sales_flag&quot; count
+flagged_count &lt;- data.frame(&quot;Flagged Records&quot; = nrow(sales_flag), check.names = FALSE)
+
+# calculate &quot;sales_flag&quot; to &quot;regional_sales&quot; ratio
+flagged_ratio &lt;- nrow(sales_flag) / nrow(regional_sales)
+
+# format ratio to a percentage
+flagged_percentage &lt;- percent(flagged_ratio, accuracy = 0.1)
+
+# extract flag to sales ratio
+flagged_table &lt;- data.frame(&quot;Percentage of Flagged Data&quot; = flagged_percentage, check.names = FALSE)
+
+# generate flagged table
+knitr::kable(sales_flag, align = rep(&quot;l&quot;, 4), row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Region</th>
+<th align="left">Quarter</th>
+<th align="left">Revenue</th>
+<th align="left">Customers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">South</td>
+<td align="left">Q1</td>
+<td align="left">$98,000</td>
+<td align="left">380</td>
+</tr>
+<tr class="even">
+<td align="left">West</td>
+<td align="left">Q1</td>
+<td align="left">$102,000</td>
+<td align="left">395</td>
+</tr>
+<tr class="odd">
+<td align="left">South</td>
+<td align="left">Q3</td>
+<td align="left">$89,000</td>
+<td align="left">350</td>
+</tr>
+<tr class="even">
+<td align="left">North</td>
+<td align="left">Q4</td>
+<td align="left">$91,250</td>
+<td align="left">324</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># generate flagged sales table
+knitr::kable(flagged_count, align = &quot;l&quot;, row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Flagged Records</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">4</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># generate flag to sales table
+knitr::kable(flagged_table, align = &quot;l&quot;, row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Percentage of Flagged Data</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">22.2%</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<hr />
+</div>
+</div>
+<div id="question-4---data-aggregation-and-business-insights"
+class="section level2">
+<h2>Question 4 - Data Aggregation and Business Insights</h2>
+<p><br></p>
+<div id="q4.-a" class="section level3">
+<h3>Q4. A</h3>
+<blockquote>
+<p>Our northern region generated the most revenue, which is expected
+given it has the highest number of branches.</p>
+</blockquote>
+<pre class="r"><code># find regional revenue
+sorted_revenue &lt;- aggregate(cbind(revenue, customers) ~ region, data = regional_sales, sum, na.rm = TRUE)
+
+# sort &quot;sorted_revenue&quot; in descending order
+region_ranked &lt;- sorted_revenue[order(-sorted_revenue$revenue),]
+
+# format revenue values to currency
+region_ranked$revenue &lt;- dollar(region_ranked$revenue, accuracy = 1)
+
+# rename columns for presentation
+names(region_ranked) &lt;- c(&quot;Region&quot;, &quot;Revenue&quot;, &quot;Customers&quot;)
+
+# extract top revenue sum from &quot;region_ranked&quot;
+best_region &lt;- head(sorted_revenue[order(-sorted_revenue$revenue),], 1)
+
+# format revenue values to currency
+best_region$revenue &lt;- dollar(best_region$revenue, accuracy = 1)
+
+# rename columns for presentation
+names(best_region) &lt;- c(&quot;Region&quot;, &quot;Revenue&quot;, &quot;Customers&quot;)
+
+# generate revenue by region table
+knitr::kable(region_ranked[, c(&quot;Region&quot;, &quot;Revenue&quot;, &quot;Customers&quot;)], align = rep(&quot;l&quot;, 3), row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Region</th>
+<th align="left">Revenue</th>
+<th align="left">Customers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">North</td>
+<td align="left">$816,250</td>
+<td align="left">2944</td>
+</tr>
+<tr class="even">
+<td align="left">East</td>
+<td align="left">$526,000</td>
+<td align="left">1915</td>
+</tr>
+<tr class="odd">
+<td align="left">South</td>
+<td align="left">$524,000</td>
+<td align="left">2005</td>
+</tr>
+<tr class="even">
+<td align="left">West</td>
+<td align="left">$345,000</td>
+<td align="left">1310</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># generate best region table
+knitr::kable(best_region[, c(&quot;Region&quot;, &quot;Revenue&quot;, &quot;Customers&quot;)], align = rep(&quot;l&quot;, 3), row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Region</th>
+<th align="left">Revenue</th>
+<th align="left">Customers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">North</td>
+<td align="left">$816,250</td>
+<td align="left">2944</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+<div id="q4.-b" class="section level3">
+<h3>Q4. B</h3>
+<blockquote>
+<p>Our data shows that the fourth quarter has the highest average
+customer count. This positive growth throughout the year suggests that
+our product or service is seasonal. Given that Q4 aligns with the
+holiday period and we lack year-over-year data, this is likely driven by
+holiday shopping. A decline in the following quarter would be a
+reasonable expectation.</p>
+</blockquote>
+<pre class="r"><code># extract customers by quarter data
+customer_avg &lt;- aggregate(cbind(revenue, customers) ~ quarter, data = regional_sales, mean, na.rm = TRUE)
+
+# round &quot;customer_avg&quot; aggregate result to nearest whole number
+customer_avg$customers &lt;- round(customer_avg$customers, 0)
+
+# rank &quot;customer_avg&quot; in descending order
+customer_ranked &lt;- customer_avg[order(-customer_avg$customers),]
+
+# format revenue from &quot;customer_avg&quot; to currency
+customer_ranked$revenue &lt;- dollar(customer_ranked$revenue, accuracy = 1)
+
+# rename columns for presentation
+names( customer_ranked ) &lt;- c(&quot;Quarter&quot;, &quot;Revenue&quot;, &quot;Customers&quot;)
+
+# extract best customer by quarter data
+best_customer &lt;- head(customer_avg[order(-customer_avg$customers),], 1)
+
+# format revenue data in &quot;best customer&quot; to currency
+best_customer$revenue &lt;- dollar(best_customer$revenue, accuracy = 1)
+
+# rename columns for presentation
+names(best_customer) &lt;- c(&quot;Quarter&quot;, &quot;Revenue&quot;, &quot;Customers&quot;)
+
+# generate customer by quarter table
+knitr::kable(customer_ranked[, c( &quot;Quarter&quot;, &quot;Revenue&quot;, &quot;Customers&quot;)], align = rep( &quot;l&quot;, 3), row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Quarter</th>
+<th align="left">Revenue</th>
+<th align="left">Customers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Q4</td>
+<td align="left">$131,875</td>
+<td align="left">482</td>
+</tr>
+<tr class="even">
+<td align="left">Q3</td>
+<td align="left">$122,750</td>
+<td align="left">456</td>
+</tr>
+<tr class="odd">
+<td align="left">Q2</td>
+<td align="left">$122,250</td>
+<td align="left">452</td>
+</tr>
+<tr class="even">
+<td align="left">Q1</td>
+<td align="left">$110,000</td>
+<td align="left">411</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># generate best customer count by quarter table
+knitr::kable(best_customer[, c(&quot;Quarter&quot;, &quot;Revenue&quot;, &quot;Customers&quot;)], align = rep(&quot;l&quot;, 3), row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Quarter</th>
+<th align="left">Revenue</th>
+<th align="left">Customers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Q4</td>
+<td align="left">$131,875</td>
+<td align="left">482</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<hr />
+</div>
+</div>
+<div id="question-5---executive-summary-creation"
+class="section level2">
+<h2>Question 5 - Executive Summary Creation</h2>
+<p><br></p>
+<div id="q5.-a" class="section level3">
+<h3>Q5. A</h3>
+<blockquote>
+<p>A table has been created to answer questions about total revenues,
+average revenues, and high-performing branches.</p>
+</blockquote>
+<pre class="r"><code># Calculate total revenue values and format to currency
+total_revenue &lt;- dollar(sum(regional_sales$revenue), accuracy = 1)
+
+# calculate quarterly revenue values 
+quarter_avg &lt;- aggregate(revenue ~ quarter, data = regional_sales, mean, na.rm = TRUE)
+
+# extract &gt; $140000 revenues
+high_revenue2 &lt;- regional_sales[regional_sales$revenue &gt; 140000, c(&quot;region&quot;, &quot;quarter&quot;, &quot;revenue&quot;)]
+                       
+# extract &quot;high_revenue2&quot; count
+high_revenue2_count &lt;- nrow(high_revenue2)
+
+# Calculate total revenue values and format to currency
+total_revenue &lt;- dollar(sum(regional_sales$revenue), accuracy = 1)
+avg_revenue &lt;- dollar(mean(regional_sales$revenue), accuracy = 1)
+
+# calculate quarterly revenue values 
+quarter_avg &lt;- aggregate(revenue ~ quarter, data = regional_sales, mean, na.rm = TRUE)
+quarter_total &lt;- aggregate(revenue ~ quarter, data = regional_sales, sum, na.rm = TRUE)
+
+# calculate regional revenue values 
+region_avg &lt;- aggregate(revenue ~ region, data = regional_sales, mean, na.rm = TRUE)
+region_total &lt;- aggregate(revenue ~ region, data = regional_sales, sum, na.rm = TRUE)
+
+# Merge the data sets
+quarter_summary &lt;- merge(quarter_total, quarter_avg, by = &quot;quarter&quot;, suffixes = c(&quot;_total&quot;, &quot;_avg&quot;))
+
+# Merge the data sets
+region_summary &lt;- merge(region_total, region_avg, by = &quot;region&quot;, suffixes = c(&quot;_total&quot;, &quot;_avg&quot;))
+
+# format quarterly revenue values to currency
+quarter_summary$revenue_total &lt;- dollar(quarter_summary$revenue_total, accuracy = 1)
+quarter_summary$revenue_avg &lt;- dollar(quarter_summary$revenue_avg, accuracy = 1)
+
+# format regional revenue values to currency
+region_summary$revenue_total &lt;- dollar(region_summary$revenue_total, accuracy = 1)
+region_summary$revenue_avg &lt;- dollar(region_summary$revenue_avg, accuracy = 1)
+
+# rename columns for table stacking
+names(quarter_summary) &lt;- c(&quot;Quarter&quot;, &quot;Total Revenues&quot;, &quot;Average Revenues&quot;)
+
+# rename columns for table stacking
+names(region_summary) &lt;- c(&quot;Quarter&quot;, &quot;Total Revenues&quot;, &quot;Average Revenues&quot;)
+
+# extract &gt; $140000 revenues
+high_revenue2 &lt;- regional_sales[regional_sales$revenue &gt; 140000, c(&quot;region&quot;, &quot;quarter&quot;, &quot;revenue&quot;)]
+                       
+# extract &quot;high_revenue2&quot; count
+high_revenue2_count &lt;- nrow(high_revenue2)                       
+
+# high-revenue records by quarter
+high_revenue_by_quarter &lt;- as.data.frame(table(high_revenue2$quarter))
+
+# high-revenue records by region
+high_revenue_by_region &lt;- as.data.frame(table(high_revenue2$region))
+
+# rename columns for table stacking
+names(high_revenue_by_quarter) &lt;- c(&quot;Quarter&quot;, &quot;High-Performance Branches&quot;)
+
+# rename columns for table stacking
+names(high_revenue_by_region) &lt;- c(&quot;Quarter&quot;, &quot;High-Performance Branches&quot;)
+
+# merge and determine &quot;high-performance branches&quot; values 
+quarter_summary2 &lt;- merge(quarter_summary, high_revenue_by_quarter, by = &quot;Quarter&quot;, all.x = TRUE)
+
+# merge and determine &quot;high-performance branches&quot; values 
+region_summary2 &lt;- merge(region_summary, high_revenue_by_region, by = &quot;Quarter&quot;, all.x = TRUE)
+
+# set NA values to 0
+quarter_summary2$`High-Performance Branches`[is.na(quarter_summary2$`High-Performance Branches`)] &lt;- 0
+
+# set NA values to 0
+region_summary2$`High-Performance Branches`[is.na(region_summary2$`High-Performance Branches`)] &lt;- 0
+
+# Summary Headers of above data for stacking
+summary_table &lt;- data.frame(
+  &quot;Quarter&quot; = &quot;**For the Year**&quot;,
+  &quot;Total Revenues&quot; = total_revenue,
+  &quot;Average Revenues&quot; = avg_revenue,
+  &quot;High-Performance Branches&quot; = high_revenue2_count, check.names = FALSE)
+
+# bold the first column for presentation
+quarter_summary2$Quarter &lt;- paste0(&quot;**&quot;, quarter_summary2$Quarter, &quot;**&quot;)
+
+# bold the first column for presentation
+region_summary2$Quarter &lt;- paste0(&quot;**&quot;, region_summary2$Quarter, &quot;**&quot;)
+
+# stack tables for presentation
+executive_summary &lt;- rbind(summary_table, quarter_summary2, region_summary2)
+
+# rename the first column header for presentation
+names(executive_summary)[1] &lt;- &quot;&quot;
+
+# generate executive summary table
+knitr::kable(executive_summary, align = rep(&quot;l&quot;, 4), row.names = FALSE)</code></pre>
+<table>
+<colgroup>
+<col width="22%" />
+<col width="20%" />
+<col width="22%" />
+<col width="34%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Total Revenues</th>
+<th align="left">Average Revenues</th>
+<th align="left">High-Performance Branches</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>For the Year</strong></td>
+<td align="left">$2,211,250</td>
+<td align="left">$122,847</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Q1</strong></td>
+<td align="left">$440,000</td>
+<td align="left">$110,000</td>
+<td align="left">0</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Q2</strong></td>
+<td align="left">$489,000</td>
+<td align="left">$122,250</td>
+<td align="left">0</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Q3</strong></td>
+<td align="left">$491,000</td>
+<td align="left">$122,750</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Q4</strong></td>
+<td align="left">$791,250</td>
+<td align="left">$131,875</td>
+<td align="left">3</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>East</strong></td>
+<td align="left">$526,000</td>
+<td align="left">$131,500</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>North</strong></td>
+<td align="left">$816,250</td>
+<td align="left">$136,042</td>
+<td align="left">3</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>South</strong></td>
+<td align="left">$524,000</td>
+<td align="left">$104,800</td>
+<td align="left">0</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>West</strong></td>
+<td align="left">$345,000</td>
+<td align="left">$115,000</td>
+<td align="left">0</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+<div id="q5.-b" class="section level3">
+<h3>Q5. B</h3>
+<blockquote>
+<p>Based on our revenue analysis ($2,211,250 total), the northern region
+demonstrates the most consistent performance, maintaining strong results
+across all quarters and outperforming the next best region by $290,250
+annually. The fourth quarter shows the strongest results, generating
+$301,500 more than the second-best quarter. On an average per-branch
+basis, this translates to regional gains of $13,195 and quarterly gains
+of $9,028 over the company wide average. It should be noted, our eastern
+region generated close to similar averages as the north, but with fewer
+branches total revenue was significantly less.</p>
+<p>Conversely, the western region had the lowest total revenue
+($345,000), primarily due to a branch closure. However, it was not the
+weakest performer. Southern branches averaged only $104,800 in sales…
+$10,200 less than the west. These regions represent the entirety of our
+underperforming revenues, comprising approximately 22% of our business
+footprint.</p>
+<p>Given the upward trend from Q1 to Q4 and consistent geographic
+patterns, our business appears seasonally sensitive. I recommend
+diversifying our product offerings to stabilize revenue year-round or
+expanding into complementary services to boost performance during slower
+months. A future feasability assessment should be done to assess
+expanding to more eastern branches.</p>
+</blockquote>
+<p><br></p>
+<hr />
+<p><em>Report generated by David on October 8, 2025.</em></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

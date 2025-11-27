@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="David Noble – 668 454 671" />
+
+<meta name="date" content="2025-11-26" />
+
+<title>Introduction to E-Business Analytics</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">David Noble Portfolio</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="projects.html">Projects</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Introduction to E-Business Analytics</h1>
+<h3 class="subtitle">Performance Metrics Report</h3>
+<h4 class="author">David Noble – 668 454 671</h4>
+<h4 class="date">2025-11-26</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#executive-summary" id="toc-executive-summary">Executive
+Summary</a></li>
+<li><a href="#question-1---website-performance-analysis"
+id="toc-question-1---website-performance-analysis">Question 1 - Website
+Performance Analysis</a>
+<ul>
+<li><a href="#q1.-a" id="toc-q1.-a">Q1. A</a></li>
+<li><a href="#q1.-b" id="toc-q1.-b">Q1. B</a></li>
+<li><a href="#q1.-c" id="toc-q1.-c">Q1. C</a></li>
+<li><a href="#q1.-d" id="toc-q1.-d">Q1. D</a></li>
+<li><a href="#q1.-e" id="toc-q1.-e">Q1. E</a></li>
+</ul></li>
+<li><a href="#question-2---understanding-relationships"
+id="toc-question-2---understanding-relationships">Question 2 -
+Understanding Relationships</a>
+<ul>
+<li><a href="#q2.-a" id="toc-q2.-a">Q2. A</a></li>
+<li><a href="#q2.-b" id="toc-q2.-b">Q2. B</a></li>
+<li><a href="#q2.-c" id="toc-q2.-c">Q2. C</a></li>
+<li><a href="#q2.-d" id="toc-q2.-d">Q2. D</a></li>
+</ul></li>
+<li><a href="#question-3---business-interpretation"
+id="toc-question-3---business-interpretation">Question 3 - Business
+Interpretation</a>
+<ul>
+<li><a href="#q3.-a" id="toc-q3.-a">Q3. A</a></li>
+<li><a href="#q3.-b" id="toc-q3.-b">Q3. B</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="executive-summary" class="section level2">
+<h2>Executive Summary</h2>
+<blockquote>
+<p>We’ve created a graph demonstrating the relationship between
+performance and engagement on our website. This relationship has a
+strong correlation (70% coefficient). 153 days of data was used to
+determine maxiumum scores of 168 and 97 in performance/engagement scores
+respectively. We also discovered 37 days of missing performance scores.
+Going forward we have a clear objective on how to improve website
+performance; Improve engagement.</p>
+</blockquote>
+</div>
+<div id="question-1---website-performance-analysis"
+class="section level2">
+<h2>Question 1 - Website Performance Analysis</h2>
+<p>Create the data set.</p>
+<pre class="r"><code># Create website performance dataset with business terminology
+webperfo &lt;- data.frame(
+  engagement = airquality$Temp,
+  performance = airquality$Ozone,
+  server_load = airquality$Wind
+)</code></pre>
+<div id="q1.-a" class="section level3">
+<h3>Q1. A</h3>
+<blockquote>
+<p>There are 3 columns of data. The headings are “engagement”,
+“performance”, and “server_load”. Having access to the first few rows of
+data instead of the entire data set makes in easier to consume visually,
+while still offering data in a report.</p>
+</blockquote>
+<pre class="r"><code># Use head() to look at the first few rows of your data
+head( webperfo )</code></pre>
+<pre><code>##   engagement performance server_load
+## 1         67          41         7.4
+## 2         72          36         8.0
+## 3         74          12        12.6
+## 4         62          18        11.5
+## 5         56          NA        14.3
+## 6         66          28        14.9</code></pre>
+</div>
+<div id="q1.-b" class="section level3">
+<h3>Q1. B</h3>
+<blockquote>
+<p>Performance has missing values (37). The summary tells us that
+engagement ranges from a value of 56 to 97 with a median/mean of 79/77
+respectively.</p>
+</blockquote>
+<pre class="r"><code># Use summary() to get summary statistics for all columns
+summary( webperfo )</code></pre>
+<pre><code>##    engagement     performance      server_load    
+##  Min.   :56.00   Min.   :  1.00   Min.   : 1.700  
+##  1st Qu.:72.00   1st Qu.: 18.00   1st Qu.: 7.400  
+##  Median :79.00   Median : 31.50   Median : 9.700  
+##  Mean   :77.88   Mean   : 42.13   Mean   : 9.958  
+##  3rd Qu.:85.00   3rd Qu.: 63.25   3rd Qu.:11.500  
+##  Max.   :97.00   Max.   :168.00   Max.   :20.700  
+##                  NA&#39;s   :37</code></pre>
+</div>
+<div id="q1.-c" class="section level3">
+<h3>Q1. C</h3>
+<blockquote>
+<p>This is important to know in order to determine the size of the data
+set. The size tells us whether the results are a trend overall, and
+whether we need more information.</p>
+</blockquote>
+<pre class="r"><code># Use nrow() to count how many days of website data you have
+nrow( webperfo )</code></pre>
+<pre><code>## [1] 153</code></pre>
+</div>
+<div id="q1.-d" class="section level3">
+<h3>Q1. D</h3>
+<blockquote>
+<p>This shows the median engagement is 81.4% of our maximum engagement.
+79 median, 97 maximum.</p>
+</blockquote>
+<pre class="r"><code># Use max() to find your highest daily engagement score
+max( webperfo$engagement )</code></pre>
+<pre><code>## [1] 97</code></pre>
+</div>
+<div id="q1.-e" class="section level3">
+<h3>Q1. E</h3>
+<blockquote>
+<p>We add “na.rm = TRUE” to the performance score task because
+performance has NA results. If we set “na.rm = FALSE” or emit entirely,
+the result of our task would be “NA”. Engagement does not have any NA
+results, so we did not need to add it to our task.</p>
+</blockquote>
+<pre class="r"><code># Use max(webperfo$performance, na.rm = TRUE) to find your best website performance score
+max(webperfo$performance, na.rm = TRUE)</code></pre>
+<pre><code>## [1] 168</code></pre>
+</div>
+</div>
+<div id="question-2---understanding-relationships"
+class="section level2">
+<h2>Question 2 - Understanding Relationships</h2>
+<div id="q2.-a" class="section level3">
+<h3>Q2. A</h3>
+<blockquote>
+<p>This graph shows a similar linear growth relationship between
+engagement and performance. This would be difficult to see in a business
+presentation without proper labels for each axis and main title. Also
+these data points are not easy on the eyes, and a trend line would
+greatly improve the visual.</p>
+</blockquote>
+<pre class="r"><code># Create a basic scatter plot using plot(webperfo$engagement, webperfo$performance)
+plot(webperfo$engagement, webperfo$performance)</code></pre>
+<p><img src="project1_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>
+<div id="q2.-b" class="section level3">
+<h3>Q2. B</h3>
+<blockquote>
+<p>Adding Labels lets business audience know what has been
+graphed/presented.</p>
+</blockquote>
+<pre class="r"><code># Now improve your plot by adding a title and axis labels
+plot(webperfo$engagement, webperfo$performance,
+     main = &quot;User Engagement vs Website Performance&quot;,
+     xlab = &quot;Daily User Engagement Score&quot;, 
+     ylab = &quot;Website Performance Score&quot;)</code></pre>
+<p><img src="project1_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+<div id="q2.-c" class="section level3">
+<h3>Q2. C</h3>
+<blockquote>
+<p>With the updated data point visuals, a linear relationship can be
+more easily seen between the performance and engagement scores.</p>
+</blockquote>
+<pre class="r"><code># Make your plot more visually appealing by adding pch = 16, col = &quot;blue&quot; to your plot command
+plot(webperfo$engagement, webperfo$performance,
+     main = &quot;User Engagement vs Website Performance&quot;,
+     xlab = &quot;Daily User Engagement Score&quot;, 
+     ylab = &quot;Website Performance Score&quot;,
+     pch = 16, col = &quot;blue&quot;)</code></pre>
+<p><img src="project1_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+<div id="q2.-d" class="section level3">
+<h3>Q2. D</h3>
+<blockquote>
+<p>Adding a trend line confirms a positive relationship between
+performance and engagement. If engagement goes up, so does
+performance.</p>
+</blockquote>
+<pre class="r"><code># Add a trend line to your plot using
+plot(webperfo$engagement, webperfo$performance,
+     main = &quot;User Engagement vs Website Performance&quot;,
+     xlab = &quot;Daily User Engagement Score&quot;, 
+     ylab = &quot;Website Performance Score&quot;,
+     pch = 16, col = &quot;blue&quot;)
+abline(lm(performance ~ engagement, data = webperfo), 
+       col = &quot;red&quot;, lwd = 2)</code></pre>
+<p><img src="project1_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+</div>
+<div id="question-3---business-interpretation" class="section level2">
+<h2>Question 3 - Business Interpretation</h2>
+<div id="q3.-a" class="section level3">
+<h3>Q3. A</h3>
+<blockquote>
+<p>The coefficient is 69.83603% (70%). This a strong correlation.</p>
+</blockquote>
+<pre class="r"><code>cor(webperfo$engagement, webperfo$performance, use = &quot;complete.obs&quot;)</code></pre>
+<pre><code>## [1] 0.6983603</code></pre>
+</div>
+<div id="q3.-b" class="section level3">
+<h3>Q3. B</h3>
+<blockquote>
+<p>When engagement is high, performance is high. This is confirmed by
+our strong correlation coefficient of the trend line we created using
+data in a plot graph. Going forward, our strategy to improve performance
+needs be to increasing engagement. We can improve engagement in various
+ways, including increasing website load speed, optimize visuals to
+improve readabilty, and upgrade the mobile-phone friendliness. We also
+need to investigate why 37 days of performance scores are missing.</p>
+</blockquote>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

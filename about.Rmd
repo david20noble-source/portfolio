@@ -1,0 +1,47 @@
+
+---
+title: "About Me"
+---
+
+## Background
+
+I’m a student at Vancouver Island University (VIU), building expertise in data analysis, business intelligence, and statistical computing.
+
+
+## Skills & Tools
+
+**Skills:**
+
+- Data cleaning & transformation
+- Statistical analysis & interpretation
+- Business‑focused data storytelling
+
+**Tools:**
+
+- R for data analysis
+- ggplot2 for professional visualizations
+- Microsoft Office mastery
+
+**Work Experience:**
+
+- Carpentry: skilled in cabinet making and moulding creation using dados
+- Saw filer: experienced in welding, benching, and CNC operation in the sawmill industry
+
+
+## Education
+
+**UVIC** - Professional Golf Management   
+**VIU** - Accounting Program Undergraduate  
+*Expected Graduation: 2028*
+
+
+## Contact
+
+Feel free to connect with me:
+
+- Email: [David20Noble@gmail.com](mailto:David20Noble@gmail.com)  
+- GitHub: [david20noble-source](https://github.com/david20noble-source)
+
+---
+
+[← Back to Home](index.html)

@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="David Noble – 668 454 671" />
+
+<meta name="date" content="2025-11-26" />
+
+<title>Business Insights Report</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">David Noble Portfolio</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="projects.html">Projects</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Business Insights Report</h1>
+<h3 class="subtitle">Data Visualization and Communication</h3>
+<h4 class="author">David Noble – 668 454 671</h4>
+<h4 class="date">2025-11-26</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#question-1---exploration-and-setup"
+id="toc-question-1---exploration-and-setup">Question 1 - Exploration and
+Setup</a>
+<ul>
+<li><a href="#q1.-a" id="toc-q1.-a">Q1. A</a></li>
+<li><a href="#q1.-b" id="toc-q1.-b">Q1. B</a></li>
+<li><a href="#q1.-c" id="toc-q1.-c">Q1. C</a></li>
+</ul></li>
+<li><a href="#question-2---business-visualizations"
+id="toc-question-2---business-visualizations">Question 2 - Business
+Visualizations</a>
+<ul>
+<li><a href="#q2.-a" id="toc-q2.-a">Q2. A</a></li>
+<li><a href="#q2.-b" id="toc-q2.-b">Q2. B</a></li>
+</ul></li>
+<li><a href="#question-3---strategic-recommendations"
+id="toc-question-3---strategic-recommendations">Question 3 - Strategic
+Recommendations</a>
+<ul>
+<li><a href="#q3.-a" id="toc-q3.-a">Q3. A</a></li>
+<li><a href="#q3.-b" id="toc-q3.-b">Q3. B</a></li>
+</ul></li>
+</ul>
+</div>
+
+<style>
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+th, td {
+  text-align: left;
+  padding: 6px;
+}
+</style>
+<pre class="r"><code>library(ggplot2)
+library(scales)
+business_data &lt;- read.csv(&quot;data/business_performance.csv&quot;)</code></pre>
+<p><br> <br></p>
+<div id="question-1---exploration-and-setup" class="section level2">
+<h2>Question 1 - Exploration and Setup</h2>
+<p><br></p>
+<div id="q1.-a" class="section level3">
+<h3>Q1. A</h3>
+<blockquote>
+<p>Our data set contains 48 observations and 7 variables, including
+character, integer, and numeric data types. The variables “quarter” and
+“channel” are classified as character types. The variables “revenue” and
+“customers” are stored as integers, ranging from $150,231 to $412,125
+and from 433 to 1,861 customers, respectively.</p>
+</blockquote>
+<pre class="r"><code># Inspect structure and summary of data set
+str(business_data)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    48 obs. of  7 variables:
+##  $ quarter        : chr  &quot;Q1&quot; &quot;Q2&quot; &quot;Q3&quot; &quot;Q4&quot; ...
+##  $ channel        : chr  &quot;Online&quot; &quot;Online&quot; &quot;Online&quot; &quot;Online&quot; ...
+##  $ year           : int  2023 2023 2023 2023 2023 2023 2023 2023 2023 2023 ...
+##  $ revenue        : int  314019 288825 296739 287699 351721 324090 348699 328609 368558 362724 ...
+##  $ customers      : int  1200 1340 1405 1241 1441 1647 1650 1556 1524 1690 ...
+##  $ conversion_rate: num  3.9 3.4 2.9 3.6 NA 3.8 3.4 3.7 4.3 3.6 ...
+##  $ region         : chr  &quot;North&quot; &quot;South&quot; &quot;East&quot; &quot;West&quot; ...</code></pre>
+<pre class="r"><code>summary(business_data)</code></pre>
+<pre><code>##    quarter            channel               year         revenue      
+##  Length:48          Length:48          Min.   :2023   Min.   :150231  
+##  Class :character   Class :character   1st Qu.:2023   1st Qu.:177597  
+##  Mode  :character   Mode  :character   Median :2024   Median :263544  
+##                                        Mean   :2024   Mean   :258796  
+##                                        3rd Qu.:2024   3rd Qu.:324372  
+##                                        Max.   :2024   Max.   :412125  
+##                                                                       
+##    customers    conversion_rate    region         
+##  Min.   : 433   Min.   :2.300   Length:48         
+##  1st Qu.: 600   1st Qu.:3.100   Class :character  
+##  Median :1223   Median :3.700   Mode  :character  
+##  Mean   :1127   Mean   :3.849                     
+##  3rd Qu.:1526   3rd Qu.:4.400                     
+##  Max.   :1861   Max.   :6.400                     
+##                 NA&#39;s   :3</code></pre>
+<p><br></p>
+</div>
+<div id="q1.-b" class="section level3">
+<h3>Q1. B</h3>
+<blockquote>
+<p>Online is our top-performing channel for revenue, while Q3 typically
+sees the highest average customer volume.</p>
+</blockquote>
+<pre class="r"><code># calculate revenue and customer totals by channel
+revenue_channel &lt;- aggregate(cbind(revenue, customers) ~ channel, data = business_data, sum, na.rm = TRUE)
+
+# calculate revenue and customer averages by quarter
+customers_quarter &lt;- aggregate(cbind(customers, revenue) ~ quarter, data = business_data, mean, na.rm = TRUE)
+
+# sort revenues and format values
+revenue_by_channel_table &lt;- transform(revenue_channel[order(-revenue_channel$revenue),],
+                                      revenue = dollar(revenue, accuracy = 1),
+                                      customers = comma(customers, accuracy = 1))
+
+# sort customers and format values
+customers_by_quarter_table &lt;- transform(customers_quarter[order(-customers_quarter$customers),],
+                                        customers = round(customers, 0),
+                                        revenue = dollar(round(revenue, 0), accuracy = 1))
+
+# find best revenue channel total and format values
+top_revenue_by_channel &lt;- head(transform(revenue_channel[order(-revenue_channel$revenue),],
+                                         revenue = dollar(revenue, accuracy = 1),
+                                         customers = comma(customers, accuracy = 1)), 1)
+
+# find best customer channel average and format values
+top_customers_by_quarter &lt;- head(transform(customers_quarter[order(-customers_quarter$customers),],
+                                       customers = round(customers, 0),
+                                       revenue = dollar(round(revenue, 0), accuracy = 1)), 1)
+
+# rename columns for presentation
+names(revenue_by_channel_table) &lt;- c(&quot;Channel&quot;, &quot;Total Revenue&quot;, &quot;Total Customers&quot;)
+
+# rename columns for presentation
+names(top_revenue_by_channel) &lt;- c(&quot;Channel&quot;, &quot;Total Revenue&quot;, &quot;Total Customers&quot;)
+
+# rename columns for presentation
+names(customers_by_quarter_table) &lt;- c(&quot;Quarter&quot;, &quot;Average Customers&quot;, &quot;Average Revenue&quot;)
+
+# rename columns for presentation
+names(top_customers_by_quarter) &lt;- c(&quot;Quarter&quot;, &quot;Average Customers&quot;, &quot;Average Revenue&quot;)
+
+# generate revenue by channel table
+knitr::kable(revenue_by_channel_table, align = rep(&quot;l&quot;, 3), row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Channel</th>
+<th align="left">Total Revenue</th>
+<th align="left">Total Customers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Online</td>
+<td align="left">$5,571,130</td>
+<td align="left">24,953</td>
+</tr>
+<tr class="even">
+<td align="left">Mobile</td>
+<td align="left">$4,158,056</td>
+<td align="left">20,449</td>
+</tr>
+<tr class="odd">
+<td align="left">Retail</td>
+<td align="left">$2,693,023</td>
+<td align="left">8,673</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># generate best revenue by channel table
+knitr::kable(top_revenue_by_channel, align = rep(&quot;l&quot;, 3), row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Channel</th>
+<th align="left">Total Revenue</th>
+<th align="left">Total Customers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Online</td>
+<td align="left">$5,571,130</td>
+<td align="left">24,953</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># generate revenue averages by channel table
+knitr::kable(customers_by_quarter_table, align = rep(&quot;l&quot;, 3), row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Quarter</th>
+<th align="left">Average Customers</th>
+<th align="left">Average Revenue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Q3</td>
+<td align="left">1173</td>
+<td align="left">$257,629</td>
+</tr>
+<tr class="even">
+<td align="left">Q2</td>
+<td align="left">1154</td>
+<td align="left">$255,322</td>
+</tr>
+<tr class="odd">
+<td align="left">Q4</td>
+<td align="left">1111</td>
+<td align="left">$256,191</td>
+</tr>
+<tr class="even">
+<td align="left">Q1</td>
+<td align="left">1069</td>
+<td align="left">$266,042</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># generate best revenue averages by channel table
+knitr::kable(top_customers_by_quarter, align = rep(&quot;l&quot;, 3), row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Quarter</th>
+<th align="left">Average Customers</th>
+<th align="left">Average Revenue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Q3</td>
+<td align="left">1173</td>
+<td align="left">$257,629</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+<div id="q1.-c" class="section level3">
+<h3>Q1. C</h3>
+<blockquote>
+<p>The channel that generates the most revenue per customer is retail,
+which delivers nearly 50% more per customer than online or mobile. This
+suggests that our best practice is to prioritize sales in our retail
+stores. We should also develop a plan to transition our mobile and
+online stores to better replicate the retail experience. While we don’t
+want to lose the broader volume and reach that mobile and online stores
+provide, or cannibalize retail, they should be optimized. Our generated
+table presents revenue per customer averages, both unweighted and
+weighted (adjusted).</p>
+</blockquote>
+<pre class="r"><code># add revenue per customer for each data input to business_data
+business_data$revenue_per_customer &lt;- business_data$revenue / business_data$customers
+
+# find revenue per customer by channel averages
+unadjusted_revenue_channel &lt;- aggregate(revenue_per_customer ~ channel, data = business_data, mean, na.rm = TRUE)
+
+# totals for each channel
+adjusted_revenue_channel &lt;- aggregate(cbind(revenue, customers) ~ channel, data = business_data, sum, na.rm = TRUE)
+
+# calculate adjusted averages by channel
+adjusted_revenue_channel$revenue_per_customer_by_channel &lt;- adjusted_revenue_channel$revenue / adjusted_revenue_channel$customers
+
+# format RPC_channel values
+unadjusted_revenue_channel &lt;- transform(unadjusted_revenue_channel[order(-unadjusted_revenue_channel$revenue_per_customer),],
+                               revenue_per_customer = dollar(round(revenue_per_customer, 2), accuracy = 0.01))
+
+# format RPC_channel values
+adjusted_revenue_channel &lt;- transform(adjusted_revenue_channel[order(-adjusted_revenue_channel$revenue_per_customer_by_channel),],
+                                      revenue_per_customer_by_channel = dollar(round(revenue_per_customer_by_channel, 2), accuracy = 0.01))
+
+# rename columns for consistency
+names(unadjusted_revenue_channel) &lt;- c(&quot;Channel&quot;, &quot;Revenue Per Customer (unadjusted)&quot;)
+
+# rename columns for consistency
+names(adjusted_revenue_channel) &lt;- c(&quot;Channel&quot;, &quot;Total Revenue&quot;, &quot;Total Customers&quot;, &quot;Revenue Per Customer (adjusted)&quot;)
+
+# combine tables
+combined_table &lt;- data.frame(
+                             &quot;Channel&quot; = unadjusted_revenue_channel$Channel,
+                             &quot;Revenue Per Customer (unadjusted)&quot; = unadjusted_revenue_channel$&quot;Revenue Per Customer (unadjusted)&quot;,
+                             &quot;Revenue Per Customer (adjusted)&quot; = adjusted_revenue_channel$&quot;Revenue Per Customer (adjusted)&quot;)
+
+# rename columns for presentation
+names(combined_table) &lt;- c(&quot;Channel&quot;, &quot;Revenue per Customer&quot;, &quot;Revenue per Customer (adjusted)&quot;)
+
+# generate combined table
+knitr::kable(combined_table, align = c(&quot;l&quot;, &quot;r&quot;, &quot;r&quot;), row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Channel</th>
+<th align="right">Revenue per Customer</th>
+<th align="right">Revenue per Customer (adjusted)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Retail</td>
+<td align="right">$314.22</td>
+<td align="right">$310.51</td>
+</tr>
+<tr class="even">
+<td align="left">Online</td>
+<td align="right">$224.33</td>
+<td align="right">$223.26</td>
+</tr>
+<tr class="odd">
+<td align="left">Mobile</td>
+<td align="right">$202.81</td>
+<td align="right">$203.34</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># generate best combined table
+knitr::kable(head(combined_table, 1), align = c(&quot;l&quot;, &quot;r&quot;, &quot;r&quot;), row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Channel</th>
+<th align="right">Revenue per Customer</th>
+<th align="right">Revenue per Customer (adjusted)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Retail</td>
+<td align="right">$314.22</td>
+<td align="right">$310.51</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<hr />
+</div>
+</div>
+<div id="question-2---business-visualizations" class="section level2">
+<h2>Question 2 - Business Visualizations</h2>
+<p><br></p>
+<div id="q2.-a" class="section level3">
+<h3>Q2. A</h3>
+<blockquote>
+<p>Our online store generates significantly more total revenue than
+retail and a moderate amount more than mobile. Based on this
+visualization, we should be investing the most in retail stores.
+Although online leads in total revenue, retail’s superior revenue per
+customer suggests untapped potential. We could invest in scaling up
+retail stores while replicating the retail experience across our mobile
+and online channels.</p>
+</blockquote>
+<pre class="r"><code>ggplot(revenue_channel, aes(x = channel, y = revenue, fill = channel)) +
+  geom_bar(stat = &quot;identity&quot;) +
+  geom_text(aes(label = dollar(revenue)), vjust = -0.5, size = 4) +
+  labs(title = &quot;Total Revenue by Channel&quot;, 
+       x = &quot;Sales Channel&quot;, y = &quot;Revenue ($)&quot;) +
+  scale_y_continuous(
+    labels = label_dollar(),
+    limits = c(0, 6000000)) +
+  theme_classic() +
+  theme(legend.position = &quot;none&quot;,
+        plot.title = element_text(hjust = 0.5))</code></pre>
+<p><img src="project3_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><br></p>
+</div>
+<div id="q2.-b" class="section level3">
+<h3>Q2. B</h3>
+<blockquote>
+<p>We’ve generated a scatter plot of revenue versus customer count by
+channel. To clarify the relationship, we’ve added a slope line for each
+channel, which confirms that retail is the most efficient at converting
+customer volume into revenue. A steeper slope indicates higher revenue
+per customer, even though retail and online may appear more efficient at
+a glance.</p>
+</blockquote>
+<pre class="r"><code># generate slope data for visual analysis
+rpc &lt;- aggregate(cbind(revenue, customers) ~ channel, data = business_data, sum)
+rpc$rpc_slope &lt;- rpc$revenue / rpc$customers
+
+# generate customized scatter plot
+ggplot(business_data, aes(x = customers, y = revenue, color = channel)) +
+  geom_point(size = 2.75) +
+  geom_abline(data = rpc, aes(slope = rpc_slope, intercept = 0, color = channel), linetype = &quot;dashed&quot;, linewidth = 1, alpha = 0.375) +
+  labs(title = &quot;Customer Count vs Revenue by Channel&quot;,
+       subtitle = &quot;(with efficiency slope overlays)&quot;,
+       x = &quot;Number of Customers&quot;, y = &quot;Revenue ($)&quot;, color = &quot;Channel&quot;) +
+  scale_y_continuous(
+    labels = label_dollar(),
+    limits = c(125000, 475000),
+    breaks = seq(0, 450000, by = 75000)) +
+  scale_x_continuous(
+    limits = c(200, 2000),
+    breaks = seq(100, 1900, by = 300)) +
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 0.5, face = &quot;bold&quot;),
+        plot.subtitle = element_text(hjust = 0.5, color = &quot;#9FB6CD&quot;, face = &quot;italic&quot;, size = 8),
+        legend.title = element_text(hjust = 1.0))</code></pre>
+<p><img src="project3_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><br></p>
+<hr />
+</div>
+</div>
+<div id="question-3---strategic-recommendations" class="section level2">
+<h2>Question 3 - Strategic Recommendations</h2>
+<p><br></p>
+<div id="q3.-a" class="section level3">
+<h3>Q3. A</h3>
+<blockquote>
+<p>A professional summary table has been created to present key revenue
+and customer metrics. Starting with company-wide totals for the period
+to establish context, followed by each channel’s relative contribution
+to total revenue and customer volume. The table then details total and
+average revenue and customer counts per channel, concluding with average
+conversion rates to illustrate how frequently patrons convert to
+customers across channels. While a few conversion rate data points are
+missing, their infrequency ensures the average remains reliable.</p>
+</blockquote>
+<pre class="r"><code># For the year data
+total_revenue &lt;- sum(business_data$revenue)
+total_customers &lt;- sum(business_data$customers)
+average_revenue &lt;- mean(business_data$revenue, na.rm = TRUE)
+average_customers &lt;- mean(business_data$customers, na.rm = TRUE)
+RPC_year &lt;- total_revenue / total_customers
+
+# conversion rate data
+con_rate &lt;- mean(business_data$conversion_rate, na.rm = TRUE)
+con_rate_table &lt;- aggregate(conversion_rate ~ channel, data = business_data, mean, na.rm = TRUE)
+
+# customer share data
+cust_share &lt;- transform(aggregate(customers ~ channel, data = business_data, sum, na.rm = TRUE),
+                        share = round(100 * customers / sum(customers), 2))
+
+# revenue share data
+rev_share &lt;- transform(aggregate(revenue ~ channel, data = business_data, sum, na.rm = TRUE),
+                        share = round(100 * revenue / sum(revenue), 0))
+
+# Averages for each channel
+AVG_channel &lt;- aggregate(cbind(revenue, customers) ~ channel, data = business_data, mean, na.rm = TRUE)
+
+# Totals for each channel
+revenue_channel &lt;- aggregate(cbind(revenue, customers) ~ channel, data = business_data, sum, na.rm = TRUE)
+
+# Add average revenue per channel without unweighted bias
+revenue_channel$revenue_by_channel_per_customer &lt;- revenue_channel$revenue / revenue_channel$customers
+
+# Bold first column for presentation 
+revenue_channel$channel &lt;- paste0(&quot;**&quot;, revenue_channel$channel, &quot;**&quot;)
+
+# Top row table
+summary_table &lt;- data.frame(
+  &quot;X&quot; = &quot;**For the Period**&quot;,
+  &quot;Total Revenues&quot; = total_revenue,
+  &quot;Total Customers&quot; = total_customers,
+  &quot;Average Revenues&quot; = average_revenue, 
+  &quot;Average Customers&quot; = average_customers,
+  &quot;Revenue per Customer&quot; = RPC_year,
+  &quot;Conversion Rate&quot; = con_rate,
+  &quot;Customer Share&quot; = &quot;100&quot;,
+  &quot;Revenue Share&quot; = &quot;100&quot;, check.names = FALSE)
+
+# combine 7 tables
+channel_table &lt;- cbind(revenue_channel[, -ncol(revenue_channel)], AVG_channel[-1], revenue_channel[-(1:3)], con_rate_table[-1], cust_share[-(1:2)], rev_share[-(1:2)])
+
+# Rename columns to stack tables
+names(channel_table) &lt;- c(&quot;X&quot;, &quot;Total Revenues&quot;, &quot;Total Customers&quot;, &quot;Average Revenues&quot;, &quot;Average Customers&quot;, &quot;Revenue per Customer&quot;, &quot;Conversion Rate&quot;, &quot;Customer Share&quot;, &quot;Revenue Share&quot;)
+
+# stack tables
+executive_summary &lt;- rbind(summary_table, channel_table)
+
+# format currency columns
+executive_summary$`Total Revenues` &lt;- dollar(round(executive_summary$`Total Revenues`))
+executive_summary$`Average Revenues` &lt;- dollar(round(executive_summary$`Average Revenues`))
+executive_summary$`Revenue per Customer` &lt;- dollar(round(executive_summary$`Revenue per Customer`))
+
+# format rate columns
+executive_summary$`Conversion Rate` &lt;- round(executive_summary$`Conversion Rate`, 2)
+executive_summary$`Customer Share` &lt;- paste0(round(as.numeric(executive_summary$`Customer Share`), 0), &quot;%&quot;)
+executive_summary$`Revenue Share` &lt;- paste0(round(as.numeric(executive_summary$`Revenue Share`), 0), &quot;%&quot;)
+
+# format customer count columns with commas
+executive_summary$`Total Customers` &lt;- comma(round(executive_summary$`Total Customers`))
+executive_summary$`Average Customers` &lt;- comma(round(executive_summary$`Average Customers`))
+
+executive_summary &lt;- executive_summary[, c(
+                                           &quot;X&quot;, 
+                                           &quot;Revenue Share&quot;, 
+                                           &quot;Customer Share&quot;, 
+                                           &quot;Total Revenues&quot;, 
+                                           &quot;Average Revenues&quot;, 
+                                           &quot;Total Customers&quot;, 
+                                           &quot;Average Customers&quot;, 
+                                           &quot;Revenue per Customer&quot;, 
+                                           &quot;Conversion Rate&quot;)]
+
+# rename column for presentation
+names(executive_summary)[1] &lt;- &quot;&quot;
+
+# generate executive table
+knitr::kable(executive_summary, align = rep(&quot;l&quot;, 8), row.names = FALSE)</code></pre>
+<table style="width:100%;">
+<colgroup>
+<col width="12%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="11%" />
+<col width="10%" />
+<col width="11%" />
+<col width="13%" />
+<col width="10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Revenue Share</th>
+<th align="left">Customer Share</th>
+<th align="left">Total Revenues</th>
+<th align="left">Average Revenues</th>
+<th align="left">Total Customers</th>
+<th align="left">Average Customers</th>
+<th align="left">Revenue per Customer</th>
+<th align="left">Conversion Rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>For the Period</strong></td>
+<td align="left">100%</td>
+<td align="left">100%</td>
+<td align="left">$12,422,209</td>
+<td align="left">$258,796</td>
+<td align="left">54,075</td>
+<td align="left">1,127</td>
+<td align="left">$230</td>
+<td align="left">3.85</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Mobile</strong></td>
+<td align="left">33%</td>
+<td align="left">38%</td>
+<td align="left">$4,158,056</td>
+<td align="left">$259,878</td>
+<td align="left">20,449</td>
+<td align="left">1,278</td>
+<td align="left">$203</td>
+<td align="left">2.88</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Online</strong></td>
+<td align="left">45%</td>
+<td align="left">46%</td>
+<td align="left">$5,571,130</td>
+<td align="left">$348,196</td>
+<td align="left">24,953</td>
+<td align="left">1,560</td>
+<td align="left">$223</td>
+<td align="left">3.64</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Retail</strong></td>
+<td align="left">22%</td>
+<td align="left">16%</td>
+<td align="left">$2,693,023</td>
+<td align="left">$168,314</td>
+<td align="left">8,673</td>
+<td align="left">542</td>
+<td align="left">$311</td>
+<td align="left">5.03</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+<div id="q3.-b" class="section level3">
+<h3>Q3. B</h3>
+<blockquote>
+<p>Our analysis of revenue, customer volume, and conversion rates
+reveals meaningful differences in channel efficiency. Retail stores
+deliver the highest revenue per customer ($311) and strongest conversion
+rate (5.03%), despite lower traffic (16% share) and revenue (22% share).
+Recommend reallocating 15% more marketing spend to retail stores to
+capitalize on their efficiency and drive incremental gains. Monitor
+performance quarterly to validate return on investment and adjust as
+needed.</p>
+</blockquote>
+<p><br></p>
+<hr />
+<p><em>Report generated by David Noble on October 31, 2025.</em></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,142 @@
+---
+title: "Introduction to E-Business Analytics"
+subtitle: "Performance Metrics Report"
+author: "David Noble -- 668 454 671"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    number_sections: FALSE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Executive Summary
+
+> We've created a graph demonstrating the relationship between performance and engagement on our website. This relationship has a strong correlation (70% coefficient). 153 days of data was used to determine maxiumum scores of 168 and 97 in performance/engagement scores respectively. We also discovered 37 days of missing performance scores. Going forward we have a clear objective on how to improve website performance; Improve engagement.
+
+## Question 1 - Website Performance Analysis
+
+Create the data set.
+
+```{r}
+# Create website performance dataset with business terminology
+webperfo <- data.frame(
+  engagement = airquality$Temp,
+  performance = airquality$Ozone,
+  server_load = airquality$Wind
+)
+```
+
+### Q1. A
+
+> There are 3 columns of data. The headings are "engagement", "performance", and "server_load". Having access to the first few rows of data instead of the entire data set makes in easier to consume visually, while still offering data in a report.   
+
+```{r}
+# Use head() to look at the first few rows of your data
+head( webperfo )
+```
+
+### Q1. B
+
+> Performance has missing values (37). The summary tells us that engagement ranges from a value of 56 to 97 with a median/mean of 79/77 respectively.
+
+```{r}
+# Use summary() to get summary statistics for all columns
+summary( webperfo )
+```
+
+### Q1. C
+
+> This is important to know in order to determine the size of the data set. The size tells us whether the results are a trend overall, and whether we need more information. 
+
+```{r}
+# Use nrow() to count how many days of website data you have
+nrow( webperfo )
+```
+
+### Q1. D
+
+> This shows the median engagement is 81.4% of our maximum engagement. 79 median, 97 maximum.
+
+```{r}
+# Use max() to find your highest daily engagement score
+max( webperfo$engagement )
+```
+
+### Q1. E
+
+> We add "na.rm = TRUE" to the performance score task because performance has NA results. If we set "na.rm = FALSE" or emit entirely, the result of our task would be "NA". Engagement does not have any NA results, so we did not need to add it to our task. 
+
+```{r}
+# Use max(webperfo$performance, na.rm = TRUE) to find your best website performance score
+max(webperfo$performance, na.rm = TRUE)
+```
+
+## Question 2 - Understanding Relationships
+
+### Q2. A
+
+> This graph shows a similar linear growth relationship between engagement and performance. This would be difficult to see in a business presentation without proper labels for each axis and main title. Also these data points are not easy on the eyes, and a trend line would greatly improve the visual. 
+
+```{r}
+# Create a basic scatter plot using plot(webperfo$engagement, webperfo$performance)
+plot(webperfo$engagement, webperfo$performance)
+```
+
+### Q2. B
+
+> Adding Labels lets business audience know what has been graphed/presented.
+
+```{r}
+# Now improve your plot by adding a title and axis labels
+plot(webperfo$engagement, webperfo$performance,
+     main = "User Engagement vs Website Performance",
+     xlab = "Daily User Engagement Score", 
+     ylab = "Website Performance Score")
+```
+
+### Q2. C
+
+> With the updated data point visuals, a linear relationship can be more easily seen between the performance and engagement scores. 
+
+```{r}
+# Make your plot more visually appealing by adding pch = 16, col = "blue" to your plot command
+plot(webperfo$engagement, webperfo$performance,
+     main = "User Engagement vs Website Performance",
+     xlab = "Daily User Engagement Score", 
+     ylab = "Website Performance Score",
+     pch = 16, col = "blue")
+```
+
+### Q2. D
+
+> Adding a trend line confirms a positive relationship between performance and engagement. If engagement goes up, so does performance. 
+
+```{r}
+# Add a trend line to your plot using
+plot(webperfo$engagement, webperfo$performance,
+     main = "User Engagement vs Website Performance",
+     xlab = "Daily User Engagement Score", 
+     ylab = "Website Performance Score",
+     pch = 16, col = "blue")
+abline(lm(performance ~ engagement, data = webperfo), 
+       col = "red", lwd = 2)
+```
+
+## Question 3 - Business Interpretation
+
+### Q3. A
+
+> The coefficient is 69.83603% (70%). This a strong correlation.
+
+```{r}
+cor(webperfo$engagement, webperfo$performance, use = "complete.obs")
+```
+
+### Q3. B
+
+>When engagement is high, performance is high. This is confirmed by our strong correlation coefficient of the trend line we created using data in a plot graph. Going forward, our strategy to improve performance needs be to increasing engagement. We can improve engagement in various ways, including increasing website load speed, optimize visuals to improve readabilty, and upgrade the mobile-phone friendliness. We also need to investigate why 37 days of performance scores are missing.

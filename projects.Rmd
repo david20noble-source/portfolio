@@ -1,0 +1,52 @@
+
+---
+title: "My Projects"
+---
+
+## Data Analysis Projects
+
+Below are selected projects that highlight my skills in data analysis, visualization, and reporting.
+
+### Project 1: Introduction to E-Business Analytics
+
+**Objective:** Build foundational skills in R and produce professional business reports using RStudio.
+
+**Key Skills:**
+
+- Implementing functions in R
+- Creating cohesive business reports
+- Developing business insights from datasets
+
+[View detailed analysis →](project1.html)
+
+---
+
+### Project 2: Business Data Analysis Report
+
+**Objective:** Perform revenue analysis and apply core data functions to business datasets.
+
+**Key Skills:**
+
+- Processing CSV data
+- Handling missing values
+- Producing executive‑style reports
+
+[View detailed analysis →](project2.html)
+
+---
+
+### Project 3: Business Insights Report
+
+**Objective:** Communicate insights effectively through exploratory analysis and professional visualizations.
+
+**Key Skills:**
+
+- Exploratory data analysis
+- Designing professional visualizations
+- Communicating actionable insights
+
+[View detailed analysis →](project3.html)
+
+---
+
+[← Back to Home](index.html)

@@ -1,0 +1,511 @@
+---
+title: "Business Data Analysis Report"
+subtitle: "CSV Import and Data Cleaning"
+author: "David Noble -- 668 454 671"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    number_sections: false
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+# setup chunk and load "scales" into the environment
+knitr::opts_chunk$set(echo = TRUE)
+library(scales)
+```
+
+<br>
+<br>
+
+## Question 1 - Data Import and Exploration
+
+<br>
+
+```{r data set}
+# Create sample regional sales data
+regional_sales <- data.frame(
+  region = c("North", "South", "East", "West", "North", "South", "East", "West",
+             "North", "South", "East", "West", "North", "South", "East", 
+             "North", "South","North"),  
+  quarter = c(rep(c("Q1", "Q2", "Q3", "Q4"), each = 4), "Q4", "Q4"),
+  revenue = c(125000, 98000, 115000, 102000, 
+              138000, 105000, 128000, 118000,
+              142000, 89000, 135000, 125000,
+              155000, 112000, 148000, 165000, 
+              120000, 91250),
+  customers = c(450, 380, 420, 395, 
+                485, 415, 465, 445,
+                520, 350, 485, 470,
+                575, 425, 545, 590, 435,324))
+```
+
+<br>
+
+### Q1. A
+
+> Our data set contains 18 observations and 4 variables, comprising both character and numeric data types.
+
+```{r Q1A}
+# examine the structure
+str(regional_sales)
+```
+
+<br>
+
+### Q1. B
+
+> Our data set has revenues ranging between $89,000 and $165,000. Customers range from 324 to 590, including those from the "North" and "South" regions, as shown in the first few rows of our data set.
+
+```{r Q1B}
+# explore the data
+head(regional_sales)
+summary(regional_sales)
+```
+
+<br>
+
+### Q1. C
+
+> We identified all distinct values for region and quarter variables, then embedded a dynamic count using an inline R expression.
+
+```{r Q1C-a}
+# find unique regional data
+region_unique <- data.frame("Unique Regions" = unique(regional_sales$region), check.names = FALSE)
+
+# count "regions_unique" for inline code reference
+region_count <- nrow(region_unique)
+
+# generate a formatted table
+knitr::kable(region_unique, align = "l", row.names = FALSE)
+```
+
+There are `r format(region_count)` unique regions.
+
+```{r Q1C-b}
+# find unique quarterly data
+quarter_unique <- data.frame("Unique Quarters" = unique(regional_sales$quarter), check.names = FALSE)
+
+# count "quarter_unique" for inline code reference
+quarter_count <- nrow(quarter_unique)
+
+# generate a formatted table
+knitr::kable(quarter_unique, align = "l", row.names = FALSE)
+```
+
+There are `r format(quarter_count)` unique quarters.
+
+<br>
+
+### Q1. D
+
+> Knowing our customer base size of 8,174, we can uncover a few insights. First, we can benchmark year-to-year traffic and compare it to competitors. Next, we could estimate daily traffic to better allocate staff, inventory, and budgets. Lastly, we can use this number to more effectively manipulate revenue data (e.g., revenue per customer, customer turnover/conversion rate).
+
+```{r Q1D}
+#  tally customers
+total_customers <- data.frame("Total Customers (All Regions & Quarters)" = sum(regional_sales$customers), check.names = FALSE)
+
+# generate customer tally table
+knitr::kable(total_customers, align = "l", row.names = FALSE)
+```
+
+<br>
+
+***
+
+## Question 2 - Data Quality Assessment
+
+<br>
+
+### Q2. A
+
+> We have 0 missing data points. This is great because missing data interrupts our ability to do data analysis. We can generalize findings, as missing points won't distort averages, totals, etc. It's important to check for missing data to ensure data accuracy and avoid having to audit or debug our data reports too late.
+
+```{r Q2A}
+# find & count missing data
+missing_data_count <- data.frame("Missing Data Points" = sum(is.na(regional_sales)), check.names = FALSE)
+
+# generate missing data table
+knitr::kable(missing_data_count, align = c("l"), row.names = FALSE)
+```
+
+<br>
+
+### Q2. B
+
+> We've generated a table to summarize the frequency of our data from every region and quarter. The data is not evenly distributed, but that was expected, as we have multiple new branches in the "North" region and lack Q4 data from our recently closed branch in the "West." In general, if we had expected even distribution, it would demonstrate the reliability across branches and suggest that our data was incomplete and/or repetitive.
+
+```{r Q2B}
+# extract frequency data
+region_frequency <- as.data.frame(table(regional_sales$region))
+quarter_frequency <- as.data.frame(table(regional_sales$quarter))
+
+# rename columns for presentation
+names(region_frequency) <- c("Region", "Frequency")
+names(quarter_frequency) <- c("Quarter", "Frequency")
+
+# generate frequency tables
+knitr::kable(region_frequency, align = "l", row.names = FALSE)
+knitr::kable(quarter_frequency, align = "l", row.names = FALSE)
+```
+
+<br>
+
+### Q2. C
+
+> Revenues from our southern branch in Q3 were below $90,000.
+
+```{r Q2C}
+# find revenue below $90,000
+low_revenue <- regional_sales[regional_sales$revenue < 90000,]
+
+# format revenue values to currency
+low_revenue$revenue <- dollar(low_revenue$revenue, accuracy = 1)
+
+# rename columns for presentation
+names(low_revenue) <- c("Region", "Quarter", "Revenue", "Customers")
+
+# generate < $90,000 table
+knitr::kable(low_revenue, align = rep("l", 4), row.names = FALSE)
+```
+
+<br>
+
+***
+
+## Question 3 - Business Logic Analysis
+
+<br>
+
+### Q3. A
+
+> We have four high-revenue branches: three from the North and one from the East. They are from the third and fourth quarters.
+
+```{r Q3A}
+# find revenue above $140,000
+high_revenue <- regional_sales[regional_sales$revenue > 140000,]
+
+# format revenue values to currency
+high_revenue$revenue <- dollar(high_revenue$revenue, accuracy = 1)
+
+# rename columns for presentation
+names(high_revenue) <- c("Region", "Quarter", "Revenue", "Customers")
+
+# create a "high_revenue" count 
+high_revenue_count <- data.frame("Regions with > $140,000 Revenue" = nrow(high_revenue), check.names = FALSE)
+
+# generate the above $140,000 table
+knitr::kable(high_revenue, align = rep("l", 4), row.names = FALSE)
+
+# generate the above $140,000 frequency table
+knitr::kable(high_revenue_count, align = "l", row.names = FALSE)
+```
+
+<br>
+
+### Q3. B
+
+> We have generated an easy-to-read table of our year-end performance. The next step is to confirm whether our "North" and "East" regions are our top performers, especially the northern branches in the fourth quarter. This may suggest that our product or service is seasonal to some degree.
+
+```{r Q3B}
+# find Q4 revenue above $130,000 & customers above 500
+year_end_performance <- regional_sales[regional_sales$quarter == "Q4" &
+                                       regional_sales$revenue > 130000 &
+                                       regional_sales$customers > 500,]
+
+# format revenue values to currency
+year_end_performance$revenue <- dollar(year_end_performance$revenue, accuracy = 1)
+
+# rename columns for presentation
+names(year_end_performance) <- c("Region", "Quarter", "Revenue", "Customers")
+
+# generate year end performance table
+knitr::kable(year_end_performance, align = rep( "l", 4), row.names = FALSE)
+```
+
+<br>
+
+### Q3. C
+
+> We have created a comparison table showing company-wide average revenues of $122,847, compared to $134,225 from the "North-East" regions. This confirms our previous suggestion that these regions are our top performers.
+
+```{r Q3C}
+# find north east regions revenue
+north_east <- regional_sales[regional_sales$region == "East" |
+                             regional_sales$region == "North",]
+
+# format revenue values to currency
+north_east$revenue <- dollar(north_east$revenue, accuracy = 1)
+
+# rename columns for presentation
+names(north_east) <- c("Region", "Quarter", "Revenue", "Customers")
+
+# calculate average north east revenue 
+# used additional functions to fix undetermined bug   
+north_east_mean <- round(mean(as.numeric(gsub("[^0-9.]", "", north_east$Revenue))), 0)
+
+# format revenue values as currency
+north_east_mean_dollar <- dollar(north_east_mean, accuracy = 1)
+
+# extract average revenue of all branches
+total_mean_revenue <- round(mean(regional_sales$revenue), 0)
+
+# format revenues values to currency
+total_mean_dollar <- dollar(total_mean_revenue, accuracy = 1)
+
+# extract north east & all revenue averages 
+north_east_total_compare <- data.frame(
+  "North-East Average Revenue" = north_east_mean_dollar,
+  "All Revenue Average" = total_mean_dollar, check.names = FALSE)
+
+# generate north east table
+knitr::kable(north_east[, c("Region", "Quarter", "Revenue", "Customers")], align = rep( "l", 4), row.names = FALSE)
+
+# generate a comparison table
+knitr::kable(north_east_total_compare, align = rep("l", 2), row.names = FALSE)
+```
+
+<br>
+
+### Q3. D
+
+> We have identified a percentage of poor sales relative to our entire company sales and observed that two of our southern branches are among our worst performers. This contributes to the idea that our product or service may be seasonal.  
+
+```{r Q3D}
+# find below $100,000 revenue or with below 400 customers
+sales_flag <- regional_sales[regional_sales$revenue < 100000 |
+                             regional_sales$customers < 400 ,]
+
+# format revenue values to currency
+sales_flag$revenue <- dollar(sales_flag$revenue, accuracy = 1)
+
+# rename columns for presentation
+names(sales_flag) <- c("Region", "Quarter", "Revenue", "Customers")
+
+# calculate "sales_flag" count
+flagged_count <- data.frame("Flagged Records" = nrow(sales_flag), check.names = FALSE)
+
+# calculate "sales_flag" to "regional_sales" ratio
+flagged_ratio <- nrow(sales_flag) / nrow(regional_sales)
+
+# format ratio to a percentage
+flagged_percentage <- percent(flagged_ratio, accuracy = 0.1)
+
+# extract flag to sales ratio
+flagged_table <- data.frame("Percentage of Flagged Data" = flagged_percentage, check.names = FALSE)
+
+# generate flagged table
+knitr::kable(sales_flag, align = rep("l", 4), row.names = FALSE)
+
+# generate flagged sales table
+knitr::kable(flagged_count, align = "l", row.names = FALSE)
+
+# generate flag to sales table
+knitr::kable(flagged_table, align = "l", row.names = FALSE)
+```                               
+
+<br>
+
+***
+
+## Question 4 - Data Aggregation and Business Insights
+
+<br>
+
+### Q4. A
+
+> Our northern region generated the most revenue, which is expected given it has the highest number of branches.
+
+```{r Q4A}
+# find regional revenue
+sorted_revenue <- aggregate(cbind(revenue, customers) ~ region, data = regional_sales, sum, na.rm = TRUE)
+
+# sort "sorted_revenue" in descending order
+region_ranked <- sorted_revenue[order(-sorted_revenue$revenue),]
+
+# format revenue values to currency
+region_ranked$revenue <- dollar(region_ranked$revenue, accuracy = 1)
+
+# rename columns for presentation
+names(region_ranked) <- c("Region", "Revenue", "Customers")
+
+# extract top revenue sum from "region_ranked"
+best_region <- head(sorted_revenue[order(-sorted_revenue$revenue),], 1)
+
+# format revenue values to currency
+best_region$revenue <- dollar(best_region$revenue, accuracy = 1)
+
+# rename columns for presentation
+names(best_region) <- c("Region", "Revenue", "Customers")
+
+# generate revenue by region table
+knitr::kable(region_ranked[, c("Region", "Revenue", "Customers")], align = rep("l", 3), row.names = FALSE)
+
+# generate best region table
+knitr::kable(best_region[, c("Region", "Revenue", "Customers")], align = rep("l", 3), row.names = FALSE)
+```
+
+<br>
+
+### Q4. B
+
+> Our data shows that the fourth quarter has the highest average customer count. This positive growth throughout the year suggests that our product or service is seasonal. Given that Q4 aligns with the holiday period and we lack year-over-year data, this is likely driven by holiday shopping. A decline in the following quarter would be a reasonable expectation.
+
+```{r Q4B}
+# extract customers by quarter data
+customer_avg <- aggregate(cbind(revenue, customers) ~ quarter, data = regional_sales, mean, na.rm = TRUE)
+
+# round "customer_avg" aggregate result to nearest whole number
+customer_avg$customers <- round(customer_avg$customers, 0)
+
+# rank "customer_avg" in descending order
+customer_ranked <- customer_avg[order(-customer_avg$customers),]
+
+# format revenue from "customer_avg" to currency
+customer_ranked$revenue <- dollar(customer_ranked$revenue, accuracy = 1)
+
+# rename columns for presentation
+names( customer_ranked ) <- c("Quarter", "Revenue", "Customers")
+
+# extract best customer by quarter data
+best_customer <- head(customer_avg[order(-customer_avg$customers),], 1)
+
+# format revenue data in "best customer" to currency
+best_customer$revenue <- dollar(best_customer$revenue, accuracy = 1)
+
+# rename columns for presentation
+names(best_customer) <- c("Quarter", "Revenue", "Customers")
+
+# generate customer by quarter table
+knitr::kable(customer_ranked[, c( "Quarter", "Revenue", "Customers")], align = rep( "l", 3), row.names = FALSE)
+
+# generate best customer count by quarter table
+knitr::kable(best_customer[, c("Quarter", "Revenue", "Customers")], align = rep("l", 3), row.names = FALSE)
+```
+
+<br>
+
+***
+
+## Question 5 - Executive Summary Creation
+
+<br>
+
+### Q5. A
+
+> A table has been created to answer questions about total revenues, average revenues, and high-performing branches.
+
+```{r}
+# Calculate total revenue values and format to currency
+total_revenue <- dollar(sum(regional_sales$revenue), accuracy = 1)
+
+# calculate quarterly revenue values 
+quarter_avg <- aggregate(revenue ~ quarter, data = regional_sales, mean, na.rm = TRUE)
+
+# extract > $140000 revenues
+high_revenue2 <- regional_sales[regional_sales$revenue > 140000, c("region", "quarter", "revenue")]
+                       
+# extract "high_revenue2" count
+high_revenue2_count <- nrow(high_revenue2)
+
+# Calculate total revenue values and format to currency
+total_revenue <- dollar(sum(regional_sales$revenue), accuracy = 1)
+avg_revenue <- dollar(mean(regional_sales$revenue), accuracy = 1)
+
+# calculate quarterly revenue values 
+quarter_avg <- aggregate(revenue ~ quarter, data = regional_sales, mean, na.rm = TRUE)
+quarter_total <- aggregate(revenue ~ quarter, data = regional_sales, sum, na.rm = TRUE)
+
+# calculate regional revenue values 
+region_avg <- aggregate(revenue ~ region, data = regional_sales, mean, na.rm = TRUE)
+region_total <- aggregate(revenue ~ region, data = regional_sales, sum, na.rm = TRUE)
+
+# Merge the data sets
+quarter_summary <- merge(quarter_total, quarter_avg, by = "quarter", suffixes = c("_total", "_avg"))
+
+# Merge the data sets
+region_summary <- merge(region_total, region_avg, by = "region", suffixes = c("_total", "_avg"))
+
+# format quarterly revenue values to currency
+quarter_summary$revenue_total <- dollar(quarter_summary$revenue_total, accuracy = 1)
+quarter_summary$revenue_avg <- dollar(quarter_summary$revenue_avg, accuracy = 1)
+
+# format regional revenue values to currency
+region_summary$revenue_total <- dollar(region_summary$revenue_total, accuracy = 1)
+region_summary$revenue_avg <- dollar(region_summary$revenue_avg, accuracy = 1)
+
+# rename columns for table stacking
+names(quarter_summary) <- c("Quarter", "Total Revenues", "Average Revenues")
+
+# rename columns for table stacking
+names(region_summary) <- c("Quarter", "Total Revenues", "Average Revenues")
+
+# extract > $140000 revenues
+high_revenue2 <- regional_sales[regional_sales$revenue > 140000, c("region", "quarter", "revenue")]
+                       
+# extract "high_revenue2" count
+high_revenue2_count <- nrow(high_revenue2)                       
+
+# high-revenue records by quarter
+high_revenue_by_quarter <- as.data.frame(table(high_revenue2$quarter))
+
+# high-revenue records by region
+high_revenue_by_region <- as.data.frame(table(high_revenue2$region))
+
+# rename columns for table stacking
+names(high_revenue_by_quarter) <- c("Quarter", "High-Performance Branches")
+
+# rename columns for table stacking
+names(high_revenue_by_region) <- c("Quarter", "High-Performance Branches")
+
+# merge and determine "high-performance branches" values 
+quarter_summary2 <- merge(quarter_summary, high_revenue_by_quarter, by = "Quarter", all.x = TRUE)
+
+# merge and determine "high-performance branches" values 
+region_summary2 <- merge(region_summary, high_revenue_by_region, by = "Quarter", all.x = TRUE)
+
+# set NA values to 0
+quarter_summary2$`High-Performance Branches`[is.na(quarter_summary2$`High-Performance Branches`)] <- 0
+
+# set NA values to 0
+region_summary2$`High-Performance Branches`[is.na(region_summary2$`High-Performance Branches`)] <- 0
+
+# Summary Headers of above data for stacking
+summary_table <- data.frame(
+  "Quarter" = "**For the Year**",
+  "Total Revenues" = total_revenue,
+  "Average Revenues" = avg_revenue,
+  "High-Performance Branches" = high_revenue2_count, check.names = FALSE)
+
+# bold the first column for presentation
+quarter_summary2$Quarter <- paste0("**", quarter_summary2$Quarter, "**")
+
+# bold the first column for presentation
+region_summary2$Quarter <- paste0("**", region_summary2$Quarter, "**")
+
+# stack tables for presentation
+executive_summary <- rbind(summary_table, quarter_summary2, region_summary2)
+
+# rename the first column header for presentation
+names(executive_summary)[1] <- ""
+
+# generate executive summary table
+knitr::kable(executive_summary, align = rep("l", 4), row.names = FALSE)
+```
+
+<br>
+
+### Q5. B
+
+> Based on our revenue analysis ($2,211,250 total), the northern region demonstrates the most consistent performance, maintaining strong results across all quarters and outperforming the next best region by $290,250 annually. The fourth quarter shows the strongest results, generating $301,500 more than the second-best quarter. On an average per-branch basis, this translates to regional gains of $13,195 and quarterly gains of $9,028 over the company wide average. It should be noted, our eastern region generated close to similar averages as the north, but with fewer branches total revenue was significantly less.
+>
+> Conversely, the western region had the lowest total revenue ($345,000), primarily due to a branch closure. However, it was not the weakest performer. Southern branches averaged only $104,800 in sales... $10,200 less than the west. These regions represent the entirety of our underperforming revenues, comprising approximately 22% of our business footprint.
+>
+> Given the upward trend from Q1 to Q4 and consistent geographic patterns, our business appears seasonally sensitive. I recommend diversifying our product offerings to stabilize revenue year-round or expanding into complementary services to boost performance during slower months. A future feasability assessment should be done to assess expanding to more eastern branches.
+
+<br>
+
+***
+_Report generated by David on October 8, 2025._

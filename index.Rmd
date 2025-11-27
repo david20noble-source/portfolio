@@ -1,0 +1,33 @@
+
+---
+title: "Welcome to My E-Management Portfolio"
+---
+
+## Howdy 🤠!
+
+I'm David Noble, and this portfolio showcases my work from E‑Management 230 (Fall 2025). It highlights skills in: 
+
+- Data cleaning and transformation
+- Statistical analysis
+- Data visualization with ggplot2
+- Professional reporting with R Markdown
+
+### Featured Projects
+
+In this portfolio, you'll see analyses covering:
+
+- **Introduction to E-Business Analytics:** From basics to professional Rstudio reports.
+- **Business Data Analysis Report:** Cleaning and analyzing CSV data.
+- **Business Insights Report:** Visual storytelling with charts and graphics
+
+
+### Navigate This Portfolio
+
+Use the navigation menu to explore my background and dive into detailed project reports:
+
+- Learn more [about me](about.html)
+- View my [projects](projects.html)
+
+---
+
+*This portfolio was built using R Markdown and is hosted on GitHub Pages.*
