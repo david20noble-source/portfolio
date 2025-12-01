@@ -319,8 +319,6 @@ knitr::kable(executive_summary, align = rep("l", 8), row.names = FALSE)
 
 <br>
 
-***
-
----
+***  
 
 [← Back to Projects](projects.html) | [← Back to Home](index.html)

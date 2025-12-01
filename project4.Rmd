@@ -1,0 +1,298 @@
+---
+title: "Open Data Network Business Intelligence Report"
+subtitle: "Data-Driven Management Analysis"
+author: "David Noble -- 668 454 671"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    number_sections: false
+    code_folding: hide
+    self_contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, warning=FALSE, message=FALSE}
+library(ggplot2)
+library(scales)
+library(dplyr)
+library(tibble)
+library(knitr)
+wine_quality <- read.csv("data/wine_quality.csv")
+```
+
+<br>
+<br>
+
+## Question 1 - Business Problem Definition
+
+<br>
+
+### Problem Statement 
+
+> Noble Wines by Latulippe, a bourgie wine start‑up, needs to identify which production variables influence wine quality in order to optimize its fermentation process without inflating costs. By analyzing chemical properties data from red wine samples, we can pinpoint the key production markers that drive quality and shape the production of our flagship wine.
+
+<br>
+
+***
+
+## Question 2 - Data Source Assessment
+
+<br>
+
+### Q2. A
+
+> Our wine quality dataset originates from the Instituto Superior de Engenharia do Porto (ISEP) in Portugal. It contains measurements and quality ratings of Portuguese red wines collected between 2004 and 2007. The dataset was originally created for scientific research in oenology. Each observation represents a lab‑analyzed wine sample, with 11 measurable variables and one subjective taste‑tester rating. The study is complete and no longer updated, reflecting data from a specific time period and region. Known limitations include the subjectivity of quality scores from taste‑testers and the geographic restriction to a single region.
+
+<br>
+
+### Q2. B
+
+> Our dataset for this project was accessed on the Kaggle webpage: [Wine Quality Dataset](https://www.kaggle.com/datasets/uciml/red-wine-quality-cortez-et-al-2009). We downloaded the wine_quality.csv file and loaded it into the RStudio environment using:  
+>  
+>  ```
+>  wine_quality <- read.csv("data/wine_quality.csv")  
+>  ```  
+>  
+>This allows our .Rmd document to run independently without relying on external data sources or an internet connection.
+
+<br>
+
+### Q2. C
+
+> The wine quality dataset contains 1,599 observations and 12 variables, with no missing values. Its numeric variables are well‑suited for quantitative analysis, and categorical groupings can be derived directly from quality scores (e.g., acidity levels grouped from low-3 to high-8). No imputation or data cleaning was required. The source is credible, originating from ISEP and published through the University of California Irvine’s Machine Learning Repository, a resource widely cited in both academic and industry research.  
+>  
+> <br>  
+>  
+> This dataset directly supports business decisions aimed at product quality improvement. Noble Wines by Latulippe can analyze how physicochemical properties — such as acidity, additives and alcohol content — influence consumer ratings to refine production processes. By linking measurable chemical attributes to perceived quality, recommendations can be made that guide strategic decisions in the wine market.
+
+```{r}
+# examine data
+dim(wine_quality)
+str(wine_quality) 
+
+# data completeness check
+colSums(is.na(wine_quality))
+(colSums(is.na(wine_quality)) / nrow(wine_quality)) * 100
+
+# data frequency for each column
+sapply(wine_quality, n_distinct)
+```
+
+<br>
+
+***
+
+## Question 3 - Data Analysis
+
+<br>
+
+### Q3. A
+
+> To begin optimizing the fermentation process, we need to aggregate all variable levels by quality rating to eliminate results that show no clear correlation with quality.
+
+```{r}
+# aggregate all variables by quality
+aggregate(. ~ quality, data = wine_quality, FUN = mean)
+```  
+
+> A quick check of the standard deviation‑to‑mean relationship reveals that only citric acid shows a consistency issue as wine quality decreases.
+
+```{r}
+# create a data frame of standard deviation / mean
+deviation <- c(
+  volatile_acidity = mean(aggregate(volatile.acidity ~ quality, data = wine_quality, FUN = function(x) sd(x)/mean(x))[[2]]),
+  citric_acid = mean(aggregate(citric.acid ~ quality, data = wine_quality, FUN = function(x) sd(x)/mean(x))[[2]]),
+  chlorides = mean(aggregate(chlorides ~ quality, data = wine_quality, FUN = function(x) sd(x)/mean(x))[[2]]),
+  density = mean(aggregate(density ~ quality, data = wine_quality, FUN = function(x) sd(x)/mean(x))[[2]]),
+  pH = mean(aggregate(pH ~ quality, data = wine_quality, FUN = function(x) sd(x)/mean(x))[[2]]),
+  sulphates = mean(aggregate(sulphates ~ quality, data = wine_quality, FUN = function(x) sd(x)/mean(x))[[2]]),
+   alcohol = mean(aggregate(alcohol ~ quality, data = wine_quality, FUN = function(x) sd(x)/mean(x))[[2]]))
+
+# generate a table for presentation
+tibble(
+  Variable = tools::toTitleCase(gsub("_", " ", names(deviation))),
+  Coefficient = paste0(round(deviation * 100, 1), "%")) %>%
+  kable(align = c("l", "r"), col.names = c("**Variable**", "**Deviation**"))
+```
+
+> We need to determine the top correlators by calculating a modified correlation coefficient for the variables and eliminating any results with less than 75% correlation.
+  
+```{r}
+# tally high quality values.
+volatileacidity <- wine_quality[wine_quality$volatile.acidity < 0.497, ]
+citricacid <- wine_quality[wine_quality$citric.acid > 0.273, ]
+chlorides <- wine_quality[wine_quality$chlorides < 0.0849, ]
+density <- wine_quality[wine_quality$density > 0.996, ]
+pH <- wine_quality[wine_quality$pH < 3.31, ]
+sulphates <- wine_quality[wine_quality$sulphates > 0.675, ]
+alcohol <- wine_quality[wine_quality$alcohol > 10.6, ]
+
+# total high quality wines
+high_quality_total <- sum(wine_quality$quality >= 7)
+
+# create data frame
+contributions <- c(
+  volatile_acidity = sum(volatileacidity$quality >= 7) / high_quality_total,
+  citric_acid = sum(citricacid$quality >= 7) / high_quality_total,
+  chlorides = sum(chlorides$quality >= 7) / high_quality_total,
+  density = sum(density$quality >= 7) / high_quality_total,
+  pH = sum(pH$quality >= 7) / high_quality_total,
+  sulphates = sum(sulphates$quality >= 7) / high_quality_total,
+  alcohol = sum(alcohol$quality >= 7) / high_quality_total)
+
+# generate table for presentation
+tibble(Variable = tools::toTitleCase(gsub("_", " ", names(contributions))),
+                                     Coefficient = paste0(round(contributions * 100, 1), "%")) %>%
+       kable(align = c("l", "r"), col.names = c("**Variable**", "**Coefficient**"))
+```
+
+> We can then establish a three‑factor testing floor. 69.1% of high‑quality wines (rated 7–8) exceed the parameters of 9.9% alcohol, 0.570 g/L sulphate, and 0.171 g/L citric acid. This provides a solid recommendation to set a bottom line requiring all wines to test above these metrics. 
+
+```{r}
+# find data with these parameters
+floor_profile <- wine_quality[
+  wine_quality$citric.acid > 0.171 &
+  wine_quality$alcohol > 9.9 &
+  wine_quality$sulphates > 0.570, ]
+
+# calculate
+low_profile <- sum(floor_profile$quality >= 7)
+percentage <- round(low_profile / sum(wine_quality$quality >= 7) * 100, 1)
+
+#generate table
+kable(paste0(percentage, "%"), col.names = c("Floor Percentile"))
+```
+
+> Lastly, we can determine a three‑factor testing benchmark. 5.1% of high‑quality wines (rated 7–8) fall below the parameters of 12.0% alcohol, 0.767 g/L sulphate, and 0.391 g/L citric acid. This provides a solid recommendation for benchmarks to meet and should be set as Noble Wines by Latulippe’s goal.
+
+```{r}
+# find data with these parameters
+ceiling_profile <- wine_quality[
+  wine_quality$citric.acid > 0.391 &
+  wine_quality$alcohol > 12.0 &
+  wine_quality$sulphates > 0.767, ]
+
+# calculate
+high_profile <- sum(ceiling_profile$quality >= 7)
+percentage <- round(high_profile / sum(wine_quality$quality >= 7) * 100, 1)
+
+# generate table
+kable(paste0(percentage, "%"), col.names = c("Benchmark Percentile"))
+```  
+  
+<br>  
+  
+### Q3. B
+
+```{r}
+# generate alcohol bar chart
+ggplot(wine_quality, aes(x = factor(quality), y = alcohol, fill = factor(quality), alpha = 0.5)) +
+  stat_summary(fun = mean, geom = "bar") +
+  stat_summary(fun = mean, geom = "text",
+               aes(label = round(after_stat(y), 2)),
+               vjust = -0.5, size = 4) +
+  labs(title = "Higher Alcohol Content Is Better",
+       x = "Quality Rating", y = "Mean Alcohol (%)") +
+  scale_y_continuous(
+    breaks = seq(9, 12.5, by = 0.5)
+  ) +
+  coord_cartesian(ylim = c(9, 12.5)) +
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold"),
+        legend.position = "none")
+```
+
+> The bar chart displays the mean alcohol content for each quality rating. A positive relationship is evident: higher alcohol levels are associated with higher wine quality. The rate of increase in quality becomes more pronounced as alcohol content rises.
+
+```{r}
+# generate sulphate boxplot
+ggplot(wine_quality, aes(x = factor(quality), y = sulphates, fill = factor(quality))) +
+  geom_boxplot(alpha = 0.5, coef = 0, outlier.shape = NA, median.colour = "red") +
+  labs(title = "Low Sulphates Worsens Flavour",
+       subtitle = "(with median marker)",
+       x = "Quality Rating", y = "Sulphates (g/L)") +
+  scale_y_continuous(
+    breaks = seq(0.5, 2, by = 0.05)) +
+  coord_cartesian(ylim = c(0.5, .85)) +
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold"),
+        plot.subtitle = element_text(hjust = 0.5, color = "red", face = "italic", size = 8),
+        legend.position = "none")
+```
+
+> The boxplot displays the upper and lower quartiles and the median sulphate levels for each wine quality rating. A positive relationship between sulphates and wine quality is evident. Lower‑end sulphate levels show a tighter distribution compared to higher‑end levels.
+
+```{r}
+# generate citric acid violin plot
+ggplot(wine_quality, aes(x = factor(quality), y = citric.acid, fill = factor(quality))) +
+  geom_violin(trim = TRUE, alpha = 0.5) +
+  stat_summary(fun = median, geom = "point", shape = 21, size = 3, fill = "red") +
+  stat_summary(fun = median, geom = "line", aes(group = 1), color = "red", linewidth = 1) +
+  labs(title = "Citric Acid Does Not Deviate In Good Wine",
+       subtitle = "(with median slope line)",
+       x = "Quality Rating", y = "Citric Acid (g/L)") +
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold"),
+        plot.subtitle = element_text(hjust = 0.5, color = "red", face = "italic", size = 8),
+        legend.position = "none")
+```
+
+> The violin plot illustrates the distribution of citric acid across wine quality ratings. A positive relationship between citric acid levels and quality ratings is evident. The data diverges further from the median at lower citric acid levels, indicating greater variability.
+
+<br> 
+
+### Q3. C
+
+> Higher alcohol percentage is strongly associated with increased wine quality. The slope of the relationship rises from 0.31 to 0.63, showing that quality improves more sharply as alcohol content increases. This makes alcohol the decisive and principal variable in production analysis.
+
+```{r}
+# calculate first and last slope
+(10.27-9.96)/(4-3)
+(12.09-11.47)/(8-7)
+```
+
+> Sulphate levels rise with wine quality but plateau around 0.74 g/L, as quality‑8 wines show no further increase. This ceiling effect suggests limited benefit at higher concentrations and highlights that, while sulphates generally exhibit a positive relationship with wine quality, the highest concentrations reveal a negative association, as seen when looking at maximum values. Excessive sulphate becomes detrimental, limiting the overall upward trend. This pattern suggests, costs associated with sulphates can be reduced by lowering the target benchmark without risk of compromising product quality.
+
+```{r}
+# find max data in each quality score for sulphate
+aggregate(sulphates ~ quality, data = wine_quality, FUN = max)
+```
+
+> The violin plot, supported by a standard deviation check, shows that citric acid deviates further from the mean as wine quality decreases. However, citric acid should remain a secondary concern compared to alcohol content, since its levels exhibit overlapping ranges despite the overall positive relationship with quality.
+
+```{r}
+# trend of deviation for citric acid
+aggregate(citric.acid ~ quality, data = wine_quality, FUN = function(x) sd(x) / mean(x))
+```
+
+<br>
+
+***
+
+## Question 4 - Strategic Recommendations
+
+<br>
+
+### Q4. A
+
+> ### Recommendations for Noble Wines by Latulippe
+>
+> **Target alcohol levels of 12% or higher**   
+> Premium wines consistently show elevated alcohol content, achieved through higher‑quality grapes and extended fermentation. Sugar concentration itself does not drive quality, but grape quality ensures optimal conditions to yield alcohol.
+>  
+> **Maintain citric acid consistency**   
+> High‑quality wines cluster tightly around 0.35–0.45 g/L citric acid. Deviations outside this range reduce taste and predictability. Strict monitoring of acid levels during fermentation is essential to preserve consistency and consumer confidence.
+>  
+> **Lower costs with sulphate regulation**   
+> While sulphates correlate positively with wine quality, the benefit plateaus around 0.74 g/L. Reducing sulphates to levels typical of less‑than‑perfect wines avoids excess input costs without compromising product quality.
+
+<br>
+
+***  
+
+[← Back to Projects](projects.html) | [← Back to Home](index.html)

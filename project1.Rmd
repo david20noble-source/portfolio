@@ -141,6 +141,6 @@ cor(webperfo$engagement, webperfo$performance, use = "complete.obs")
 
 >When engagement is high, performance is high. This is confirmed by our strong correlation coefficient of the trend line we created using data in a plot graph. Going forward, our strategy to improve performance needs be to increasing engagement. We can improve engagement in various ways, including increasing website load speed, optimize visuals to improve readabilty, and upgrade the mobile-phone friendliness. We also need to investigate why 37 days of performance scores are missing.
 
----
+***  
 
 [← Back to Projects](projects.html) | [← Back to Home](index.html)

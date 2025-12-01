@@ -507,8 +507,6 @@ knitr::kable(executive_summary, align = rep("l", 4), row.names = FALSE)
 
 <br>
 
-***
-
----
+***  
 
 [← Back to Projects](projects.html) | [← Back to Home](index.html)
