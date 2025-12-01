@@ -61,4 +61,18 @@ title: "My Projects"
   
 ***  
 
+### Website Deployment Reflection
+
+**Objective:** Create a portfolio hosted on Github Pages using R Markdown (this website!)
+
+**Key Skills:**
+
+- Website deployment.
+- Consistent workflow and professional polish.
+- Self reflection documentation.
+
+[View project →](final.html)  
+
+***  
+
 [← Back to Home](index.html)

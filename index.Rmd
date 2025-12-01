@@ -13,15 +13,17 @@ I'm David Noble, and this portfolio showcases my work from E‑Management 230. I
 - Statistical analysis
 - Data visualization with ggplot2
 - Professional reporting with R Markdown
+- Webpage deployment 
 
 ***  
 
 ### Featured Projects
 
-- **Introduction to E-Business Analytics**  
-- **Business Data Analysis Report**  
-- **Business Insights Report**  
-- **Open Data Network Business Intelligence Report**
+- Introduction to E-Business Analytics    
+- Business Data Analysis Report  
+- Business Insights Report    
+- Open Data Network Business Intelligence Report  
+- Website Deployment Reflection  
 
 ***  
 

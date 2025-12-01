@@ -1,0 +1,36 @@
+---
+title: "Website Deployment Reflection"
+author: "David Noble, 668454671"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    theme: cosmo
+---
+
+## Website Information
+
+**Live Website URL:** https://david20noble-source.github.io/portfolio  
+**GitHub Repository URL:** https://github.com/david20noble-source/portfolio  
+**Project Type:** Individual Portfolio
+
+***
+
+## Reflection
+
+Building and deploying my portfolio website was a valuable learning experience. I discovered how R Markdown integrates with GitHub to create a simple, reproducible webpage. The simplicity, inspired me to create a "jeopardy!" style game to play over the holidays with my family.
+
+One of the biggest challenges I faced was dealing with deployment errors caused by OneDrive file locks. Without deleting the old auto generated files manually in the "build website" step, my computer did not relent; there is an unknown reason why it wouldn't give permission for files to be overwritten. Additionally, file naming consistency with capitalization was a simple but timely troubleshoot in my final steps.
+
+Although I worked individually, the process highlighted how collaboration would require clear division of tasks and consistent communication, since even small inconsistencies can break a shared project. 
+
+Overall, this project strengthened my technical confidence and gave me practical insight into deploying a professional, working website.
+
+***
+
+## Website Overview
+   
+My website is a professional portfolio featuring four E‑Management 230 projects with analysis, communication, and visualizations. It includes a homepage introducing the site, an about page outlining my background, and a projects page linking to detailed reports.
+  
+***  
+
+[← Back to Projects](projects.html) | [← Back to Home](index.html)
